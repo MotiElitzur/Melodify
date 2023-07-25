@@ -13,7 +13,7 @@ import androidx.navigation.NavController
 import com.motiapps.melodify.navigation.NavDirections
 
 @Composable
-fun SplashScreen(viewModel: SplashModel, navController: NavController) {
+fun SplashScreen(viewModel: SplashViewModel, navController: NavController) {
 
     val navigationEvent: State<NavDirections?> = viewModel.navigationEvent.collectAsState()
 

@@ -9,7 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
 
 @Composable
-fun HomeScreen(viewModel: HomeModel, navController: NavController) {
+fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
 
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
         Text(text = "Home Screen")
