@@ -1,7 +1,7 @@
 package com.motiapps.melodify.presentation.splash
 
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.motiapps.melodify.base.BaseViewModel
 import com.motiapps.melodify.domain.model.User
 import com.motiapps.melodify.domain.usecases.UserUseCases
 import com.motiapps.melodify.navigation.NavDirections
@@ -15,7 +15,7 @@ import javax.inject.Inject
 class SplashViewModel @Inject constructor(
 //    private val dataViewModel: DataViewModel,
     private val userUseCase: UserUseCases
-) : ViewModel() {
+) : BaseViewModel() {
 
     private val _navigationEvent = MutableStateFlow<NavDirections?>(null)
     val navigationEvent: StateFlow<NavDirections?> = _navigationEvent
