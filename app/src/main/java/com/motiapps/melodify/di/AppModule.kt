@@ -82,5 +82,4 @@ object AppModule {
             insertUser = InsertUserUseCase(userRepository),
         )
     }
-
 }
