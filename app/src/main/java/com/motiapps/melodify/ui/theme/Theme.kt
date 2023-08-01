@@ -5,7 +5,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.tooling.preview.Preview
 
 
 private val LightColors = lightColorScheme(
@@ -74,7 +73,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun MelodifyTheme(
+fun AppTheme(
   useDarkTheme: Boolean = isSystemInDarkTheme(),
   content: @Composable() () -> Unit
 ) {

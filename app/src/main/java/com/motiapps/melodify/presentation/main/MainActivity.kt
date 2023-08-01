@@ -3,20 +3,29 @@ package com.motiapps.melodify.presentation.main
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.motiapps.melodify.navigation.NavGraph
-import com.motiapps.melodify.ui.theme.MelodifyTheme
+import com.motiapps.melodify.presentation.splash.SplashViewModel
+import com.motiapps.melodify.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    private val splashViewModel: SplashViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        // Handle the splash screen transition.
+        val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
         setContent {
-            MelodifyTheme {
+            AppTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
@@ -25,6 +34,14 @@ class MainActivity : ComponentActivity() {
                     NavGraph()
                 }
             }
+        }
+
+        //Keep returning false to Should Keep On Screen until ready to begin.
+        splashScreen.setKeepOnScreenCondition {
+            // Liste to splash view model splashViewModel.navigationEvent.value
+// if it is not null return true to remove splash screen
+            splashViewModel.navigationEvent.value != null
+
         }
     }
 }

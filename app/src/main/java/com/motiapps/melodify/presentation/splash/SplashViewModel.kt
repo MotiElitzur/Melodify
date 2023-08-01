@@ -6,6 +6,7 @@ import com.motiapps.melodify.domain.model.User
 import com.motiapps.melodify.domain.usecases.UserUseCases
 import com.motiapps.melodify.navigation.NavDirections
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -30,10 +31,13 @@ class SplashViewModel @Inject constructor(
                 )
             )
 
+
             val user = userUseCase.getUser("blabla")
 
             println("user blabla: $user")
 
+
+            delay(5000)
             _navigationEvent.value = NavDirections.Home
         }
     }
