@@ -7,6 +7,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.motiapps.melodify.navigation.NavGraph
@@ -22,7 +23,9 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
 
         // Handle the splash screen transition.
-        val splashScreen = installSplashScreen()
+        val appSplashScreen = installSplashScreen()
+        println("appSplashScreen: $appSplashScreen")
+
         super.onCreate(savedInstanceState)
         setContent {
             AppTheme {
@@ -31,20 +34,22 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+                    LaunchedEffect(splashViewModel) {
+                        splashViewModel.navigationEvent.collect { event ->
+                            if (event != null) {
+                                appSplashScreen.setKeepOnScreenCondition { false }
+                            }
+                        }
+                    }
                     NavGraph()
                 }
             }
         }
 
-        //Keep returning false to Should Keep On Screen until ready to begin.
-        splashScreen.setKeepOnScreenCondition {
-            // Liste to splash view model splashViewModel.navigationEvent.value
-// if it is not null return true to remove splash screen
-            splashViewModel.navigationEvent.value != null
-
-        }
+        appSplashScreen.setKeepOnScreenCondition { true }
     }
 }
+
 //
 //@Composable
 //fun Greeting(name: String, modifier: Modifier = Modifier) {
