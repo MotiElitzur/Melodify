@@ -14,6 +14,13 @@ fun NavGraph() {
 
     NavHost(navController = navController, startDestination = startDestination) {
 
+//        composable(NavDirections.Splash.route) {
+//            SplashScreen(
+//                viewModel = hiltViewModel(),
+//                navController = navController
+//            )
+//        }
+
         composable(NavDirections.Home.route) {
             HomeScreen(
                 viewModel = hiltViewModel(),
