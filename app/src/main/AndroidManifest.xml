@@ -11,12 +11,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_app_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.AppSplashTheme"
-        tools:targetApi="31">
+        android:theme="@style/Theme.AppSplashTheme">
         <activity
             android:name=".presentation.main.MainActivity"
-            android:exported="true"
-            android:label="@string/app_name">
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
