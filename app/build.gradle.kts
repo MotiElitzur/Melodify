@@ -12,8 +12,8 @@ android {
 
     defaultConfig {
         applicationId = "com.motiapps.melodify"
-        minSdk = 31
-        targetSdk = 35
+        minSdk = 31 // Android 12
+        targetSdk = 35 // Android 15
         versionCode = 1
         versionName = "1.0"
 
