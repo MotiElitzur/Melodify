@@ -5,7 +5,7 @@ sealed class NavDirections {
     val route: String
         get() = this::class.simpleName?.lowercase() ?: ""
 
-    //    object Splash : NavDirections()
+    object Loading : NavDirections()
     object Login : NavDirections()
     object Register : NavDirections()
     object Home : NavDirections()

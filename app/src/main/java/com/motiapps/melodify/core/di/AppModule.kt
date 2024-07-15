@@ -2,15 +2,19 @@ package com.motiapps.melodify.core.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.firebase.auth.FirebaseAuth
 import com.motiapps.melodify.core.App
 import com.motiapps.melodify.core.data.repository.base.DataRepository
+import com.motiapps.melodify.core.data.repository.impl.AuthRepositoryImpl
 import com.motiapps.melodify.core.data.repository.impl.UserRepositoryImpl
 import com.motiapps.melodify.core.data.source.AppDatabase
 import com.motiapps.melodify.core.data.source.Sources
+import com.motiapps.melodify.core.domain.repository.AuthRepository
 import com.motiapps.melodify.core.domain.repository.UserRepository
 import com.motiapps.melodify.core.domain.usecases.GetUserUseCase
 import com.motiapps.melodify.core.domain.usecases.InsertUserUseCase
 import com.motiapps.melodify.core.domain.usecases.UserUseCases
+import com.motiapps.melodify.core.presentation.navigation.NavControllerManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -30,9 +34,27 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideNavControllerManager(): NavControllerManager {
+        return NavControllerManager()
+    }
+
+    @Provides
+    @Singleton
     fun provideDataRepository(): DataRepository {
         return DataRepository()
     }
+
+//    @Provides
+//    @Singleton
+//    fun provideFirebaseAuth(): FirebaseAuth {
+//        return FirebaseAuth.getInstance()
+//    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
+//        return AuthRepositoryImpl(firebaseAuth)
+//    }
 
 //    @Provides
 //    fun provideUserViewModel(

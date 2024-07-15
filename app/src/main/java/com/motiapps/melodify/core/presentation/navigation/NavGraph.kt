@@ -8,18 +8,29 @@ import androidx.navigation.compose.rememberNavController
 import com.motiapps.melodify.features.home.HomeScreen
 
 @Composable
-fun NavGraph() {
+//fun NavGraph(navControllerManager: NavControllerManager) {
+//    val navController = rememberNavController()
+//    navControllerManager.setupWithNavController(navController)
+//    val startDestination: String = NavDirections.Home.route
+
+fun NavGraph(startDestination: NavDirections) {
     val navController = rememberNavController()
-    val startDestination: String = NavDirections.Home.route
 
-    NavHost(navController = navController, startDestination = startDestination) {
+    NavHost(navController = navController, startDestination = startDestination.route) {
 
-//        composable(NavDirections.Splash.route) {
-//            SplashScreen(
-//                viewModel = hiltViewModel(),
-//                navController = navController
-//            )
-//        }
+        composable(NavDirections.Login.route) {
+            HomeScreen(
+                viewModel = hiltViewModel(),
+                navController = navController
+            )
+        }
+
+        composable(NavDirections.Loading.route) {
+            HomeScreen(
+                viewModel = hiltViewModel(),
+                navController = navController
+            )
+        }
 
         composable(NavDirections.Home.route) {
             HomeScreen(

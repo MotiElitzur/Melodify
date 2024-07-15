@@ -4,16 +4,17 @@ plugins {
     alias(libs.plugins.compose.compiler)
     alias(libs.plugins.hilt.gradle)
     alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
 }
 
 android {
     namespace = "com.motiapps.melodify"
-    compileSdk = 35
+    compileSdk = 34
 
     defaultConfig {
         applicationId = "com.motiapps.melodify"
         minSdk = 31 // Android 12
-        targetSdk = 35 // Android 15
+        targetSdk = 34 // Android 15
         versionCode = 1
         versionName = "1.0"
 
@@ -101,6 +102,13 @@ dependencies {
     implementation(libs.androidx.compose.ui)
     implementation(libs.androidx.compose.ui.tooling.preview)
     implementation(libs.androidx.compose.material3)
+
+    // Firebase
+//    implementation(libs.google.services)
+    val firebaseBom = platform(libs.firebase.bom)
+    implementation(firebaseBom)
+    implementation(libs.firebase.auth)
+    implementation(libs.firebase.firestore)
 
 
     implementation(libs.androidx.compose.material.icons.extended)
