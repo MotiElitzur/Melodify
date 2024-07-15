@@ -1,4 +1,4 @@
-package com.motiapps.melodify
+package motiapps.melodify
 
 import org.junit.Test
 

@@ -8,11 +8,11 @@ plugins {
 }
 
 android {
-    namespace = "com.motiapps.melodify"
+    namespace = "motiapps.melodify"
     compileSdk = 34
 
     defaultConfig {
-        applicationId = "com.motiapps.melodify"
+        applicationId = "motiapps.melodify"
         minSdk = 31 // Android 12
         targetSdk = 34 // Android 15
         versionCode = 1
