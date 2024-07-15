@@ -11,6 +11,8 @@ import androidx.navigation.NavController
 @Composable
 fun HomeScreen(viewModel: HomeViewModel, navController: NavController) {
 
+    println("HomeScreen created")
+
     Column(modifier = Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center) {
         Text(text = "Home Screen")
     }
