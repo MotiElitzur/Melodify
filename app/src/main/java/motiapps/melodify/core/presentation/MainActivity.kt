@@ -11,28 +11,22 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
-import motiapps.melodify.core.presentation.navigation.NavControllerManager
 import motiapps.melodify.core.presentation.navigation.NavGraph
-import motiapps.melodify.features.splash.SplashViewModel
+import motiapps.melodify.features.splash.presentation.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-//    @Inject
-//    lateinit var navControllerManager: NavControllerManager
+    // This is better way then inject for viewModels in activity.
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        // Install the splash screen and set the condition to keep it visible
+        // Install the splash screen before on create and set the condition to keep it visible
         installSplashScreen().setKeepOnScreenCondition {
-//            splashViewModel.initialRoute.value == null
-            val keepOnScreen = splashViewModel.initialRoute.value == null
-            println("Keep splash screen on: $keepOnScreen, initialRoute: ${splashViewModel.initialRoute.value}")
-            keepOnScreen
+            splashViewModel.initialRoute.value == null
         }
 
         super.onCreate(savedInstanceState)
@@ -40,6 +34,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             AppTheme {
 
+                // Observe the initial route and navigate to it.
                 val initialRoute by splashViewModel.initialRoute.collectAsState()
 
                 if (initialRoute != null) {
@@ -48,7 +43,6 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         NavGraph(startDestination = initialRoute!!)
-//                    NavGraph(navControllerManager = navControllerManager)
                     }
                 }
             }
