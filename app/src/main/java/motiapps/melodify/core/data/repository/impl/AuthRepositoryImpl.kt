@@ -8,7 +8,16 @@ import javax.inject.Inject
 class AuthRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth
 ) : AuthRepository {
-    override suspend fun getCurrentUser(): FirebaseUser? {
+
+    override suspend fun getAuthUser(): FirebaseUser? {
         return firebaseAuth.currentUser
+    }
+
+    override suspend fun getAuthUserId(): String? {
+        return firebaseAuth.currentUser?.uid
+    }
+
+    override suspend fun isUserAuthLoggedIn(): Boolean {
+        return firebaseAuth.currentUser != null
     }
 }
