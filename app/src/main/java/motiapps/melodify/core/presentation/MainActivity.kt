@@ -15,6 +15,8 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.presentation.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import motiapps.melodify.core.presentation.components.ErrorDialog
+import motiapps.melodify.core.presentation.navigation.NavDirections
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -26,23 +28,22 @@ class MainActivity : ComponentActivity() {
 
         // Install the splash screen before on create and set the condition to keep it visible
         installSplashScreen().setKeepOnScreenCondition {
-            splashViewModel.initialRoute.value == null
+            splashViewModel.state.isLoading
         }
 
         super.onCreate(savedInstanceState)
 
         setContent {
             AppTheme {
-
                 // Observe the initial route and navigate to it.
-                val initialRoute by splashViewModel.initialRoute.collectAsState()
+                val state by splashViewModel.uiState.collectAsState()
 
-                if (initialRoute != null) {
+                state.initialRoute?.let { initialRoute ->
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        NavGraph(startDestination = initialRoute!!)
+                        NavGraph(startDestination = initialRoute)
                     }
                 }
             }
