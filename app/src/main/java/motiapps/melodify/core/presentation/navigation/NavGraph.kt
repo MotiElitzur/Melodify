@@ -10,11 +10,6 @@ import motiapps.melodify.features.loading.LoadingScreen
 import motiapps.melodify.features.login.LoginScreen
 
 @Composable
-//fun NavGraph(navControllerManager: NavControllerManager) {
-//    val navController = rememberNavController()
-//    navControllerManager.setupWithNavController(navController)
-//    val startDestination: String = NavDirections.Home.route
-
 fun NavGraph(startDestination: NavDirections) {
     val navController = rememberNavController()
 
@@ -40,5 +35,18 @@ fun NavGraph(startDestination: NavDirections) {
                 navController = navController
             )
         }
+
+        // there is a way to separate the navigation logic from the screen using navigation parts.
+//        navigation(
+//            route = NavDirections.HomeFeature.route,
+//            startDestination = NavDirections.Home.route
+//        ) {
+//            composable(NavDirections.Home.route) {
+//                HomeScreen(
+//                    viewModel = hiltViewModel(),
+//                    navController = navController
+//                )
+//            }
+//        }
     }
 }
