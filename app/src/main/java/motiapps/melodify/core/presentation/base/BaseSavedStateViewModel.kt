@@ -4,7 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
-abstract class BaseSavedStateViewModel<State : ViewState, Event : IViewEvent?>(
+abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?>(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
