@@ -19,7 +19,6 @@ class SplashViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            delay(0)
             checkIfUserIsLoggedIn()
         }
     }
@@ -71,26 +70,3 @@ class SplashViewModel @Inject constructor(
     // endregion
 
 }
-
-
-//@HiltViewModel
-//class SplashViewModel @Inject constructor(
-//    private val userLoggedInUseCase: UserLoggedInUseCase,
-//) : BaseViewModel() {
-//
-//    private val _initialRoute = MutableStateFlow<NavDirections?>(null)
-//    val initialRoute: StateFlow<NavDirections?> = _initialRoute
-//
-//    init {
-//        viewModelScope.launch {
-//            val isUserLoggedIn = userLoggedInUseCase()
-//            println("SplashViewModel isUserLoggedIn: $isUserLoggedIn")
-//            _initialRoute.value = if (isUserLoggedIn) NavDirections.Loading else NavDirections.Login
-//
-//
-//        }
-//    }
-//
-//
-//    }
-//}
