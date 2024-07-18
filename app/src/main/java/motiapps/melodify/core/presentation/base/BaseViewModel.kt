@@ -3,7 +3,7 @@ package motiapps.melodify.core.presentation.base
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
-abstract class BaseViewModel<State : ViewState, Event : IViewEvent?> : ViewModel() {
+abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewModel() {
 
     // region State
 
