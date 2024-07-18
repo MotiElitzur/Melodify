@@ -1,5 +1,6 @@
 package motiapps.melodify.features.splash.presentation
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import motiapps.melodify.core.presentation.base.BaseViewModel
 import motiapps.melodify.features.splash.domain.usecases.UserLoggedInUseCase
@@ -7,13 +8,15 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import motiapps.melodify.core.domain.base.Resource
+import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.navigation.NavDirections
 import javax.inject.Inject
 
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val userLoggedInUseCase: UserLoggedInUseCase,
-) : BaseViewModel<SplashState, SplashEvent>() {
+    private val savedStateHandle: SavedStateHandle
+) : BaseSavedStateViewModel<SplashState, SplashEvent>(savedStateHandle = savedStateHandle) {
 
     // region init
 
