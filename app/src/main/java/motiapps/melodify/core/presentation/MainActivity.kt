@@ -15,8 +15,6 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.presentation.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import motiapps.melodify.core.presentation.components.ErrorDialog
-import motiapps.melodify.core.presentation.navigation.NavDirections
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {

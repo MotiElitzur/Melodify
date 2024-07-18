@@ -1,9 +1,12 @@
 package motiapps.melodify.core.presentation.base
 
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
 
-abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewModel() {
+abstract class BaseViewModel<State : IViewState, Event : IViewEvent?>(
+    private val savedStateHandle: SavedStateHandle
+) : ViewModel() {
 
     // region State
 
@@ -18,9 +21,9 @@ abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewMode
     val state: State get() = uiState.value
 
     protected fun setState(reduce: State.() -> State) {
-        val newState = state.reduce()
-        _uiState.value = newState
-        println("$newState")
+        // Use the update method to avoid race conditions.
+        _uiState.update { currentState -> currentState.reduce() }
+        println("$state")
     }
 
     // endregion
