@@ -10,7 +10,9 @@ import motiapps.melodify.features.loading.LoadingScreen
 import motiapps.melodify.features.login.LoginScreen
 
 @Composable
-fun NavGraph(startDestination: NavDirections) {
+fun NavGraph(initialRoute: String) {
+
+    val startDestination = NavDirections.fromName(initialRoute)
     val navController = rememberNavController()
 
     NavHost(navController = navController, startDestination = startDestination.route) {

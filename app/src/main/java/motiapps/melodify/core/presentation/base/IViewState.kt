@@ -1,3 +1,5 @@
 package motiapps.melodify.core.presentation.base
 
-interface IViewState
+import android.os.Parcelable
+
+interface IViewState: Parcelable // so it can be saved in savedStateHandle

@@ -41,7 +41,7 @@ class SplashViewModel @Inject constructor(
                     setState {
                         state.copy(
                             isLoading = false,
-                            initialRoute = event.route
+                            initialRoute = event.initialScreen.route
                         )
                     }
                 }
