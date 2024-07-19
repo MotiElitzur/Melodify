@@ -2,13 +2,17 @@ package motiapps.melodify.core.presentation.base
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?>(
     private val savedStateHandle: SavedStateHandle
 ) : ViewModel() {
 
     // region State
+
+    // Mutex for state synchronization
 
     // Force the implementation of the initial state.
     private val initialState: State by lazy { createInitialState() }
@@ -21,7 +25,9 @@ abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?>(
     val state: State get() = uiState.value
 
     protected fun setState(reduce: State.() -> State) {
-        savedStateHandle["state"] = state.reduce()
+        viewModelScope.launch {
+            savedStateHandle["state"] = state.reduce()
+        }
     }
 
     // endregion

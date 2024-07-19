@@ -35,13 +35,15 @@ class MainActivity : ComponentActivity() {
             AppTheme {
                 // Observe the initial route and navigate to it.
                 val state by splashViewModel.uiState.collectAsState()
+                println("MainActivity: $state")
 
                 state.initialRoute?.let { initialRoute ->
                     Surface(
                         modifier = Modifier.fillMaxSize(),
                         color = MaterialTheme.colorScheme.background
                     ) {
-                        NavGraph(startDestination = initialRoute)
+                        println("Initial route: $initialRoute")
+//                        NavGraph(initialRoute = initialRoute)
                     }
                 }
             }

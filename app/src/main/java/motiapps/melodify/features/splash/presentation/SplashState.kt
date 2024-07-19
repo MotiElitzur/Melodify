@@ -1,9 +1,10 @@
 package motiapps.melodify.features.splash.presentation
 
-import motiapps.melodify.core.presentation.base.BaseSavedState
-import motiapps.melodify.core.presentation.navigation.NavDirections
+import kotlinx.parcelize.Parcelize
+import motiapps.melodify.core.presentation.base.IViewState
 
+@Parcelize
 data class SplashState(
     val isLoading: Boolean,
-    val initialRoute: NavDirections? = null
-): BaseSavedState()
+    val initialRoute: String? = null
+): IViewState

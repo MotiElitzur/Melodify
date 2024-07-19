@@ -16,4 +16,12 @@ sealed class NavDirections {
     object Home : NavDirections()
     object Profile : NavDirections()
     object CreateChat : NavDirections()
+
+    companion object {
+        private val subclasses = NavDirections::class.sealedSubclasses
+
+        fun fromName(name: String?): NavDirections {
+            return subclasses.firstOrNull { it.simpleName.equals(name, true) }?.objectInstance ?: Loading
+        }
+    }
 }

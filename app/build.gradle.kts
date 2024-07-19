@@ -70,6 +70,8 @@ android {
 
 dependencies {
 
+    implementation(libs.kotlin.reflection)
+
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
     androidTestImplementation(composeBom)
