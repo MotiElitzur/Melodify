@@ -33,7 +33,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -74,7 +75,6 @@ dependencies {
 
     val composeBom = platform(libs.compose.bom)
     implementation(composeBom)
-    androidTestImplementation(composeBom)
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
@@ -82,15 +82,8 @@ dependencies {
 
     // Hilt
     implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
     implementation(libs.hilt.navigation.compose)
-    
-    androidTestImplementation(libs.hilt.android.testing)
-    kspAndroidTest(libs.hilt.android.compiler)
-    
-    testImplementation(libs.hilt.android.testing)
-    kspTest(libs.hilt.android.compiler)
+    ksp(libs.hilt.compiler)
 
     // Navigation
     implementation(libs.navigation.compose)
@@ -105,6 +98,8 @@ dependencies {
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
+    implementation(libs.compose.material.icons.extended)
+    implementation(libs.compose.runtime)
 
     // Firebase
     val firebaseBom = platform(libs.firebase.bom)
@@ -112,21 +107,25 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.firestore)
 
-    implementation(libs.compose.material.icons.extended)
-    implementation(libs.compose.runtime)
-
     // Tooling
     debugImplementation(libs.compose.ui.tooling)
-    // Instrumented tests
-    androidTestImplementation(libs.compose.ui.test.junit4)
     debugImplementation(libs.compose.ui.test.manifest)
 
     // Local tests: jUnit, coroutines, Android runner
     testImplementation(libs.junit)
+    testImplementation(libs.junit.jupiter)
     testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.hilt.android.testing)
+    testImplementation(libs.truth)
+    kspTest(libs.hilt.android.compiler)
 
     // Instrumented tests: jUnit rules and runners
+    androidTestImplementation(composeBom)
+    androidTestImplementation(libs.hilt.android.testing)
+    androidTestImplementation(libs.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.core)
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)
+    androidTestImplementation(libs.truth)
+    kspAndroidTest(libs.hilt.android.compiler)
 }

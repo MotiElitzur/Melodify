@@ -19,10 +19,12 @@ import dagger.hilt.android.AndroidEntryPoint
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
+
     // This is better way then inject for viewModels in activity.
     private val splashViewModel: SplashViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+        println("MainActivity created")
 
         // Install the splash screen before on create and set the condition to keep it visible
         installSplashScreen().setKeepOnScreenCondition {
@@ -43,7 +45,7 @@ class MainActivity : ComponentActivity() {
                         color = MaterialTheme.colorScheme.background
                     ) {
                         println("Initial route: $initialRoute")
-//                        NavGraph(initialRoute = initialRoute)
+                        NavGraph(initialRoute = initialRoute)
                     }
                 }
             }
