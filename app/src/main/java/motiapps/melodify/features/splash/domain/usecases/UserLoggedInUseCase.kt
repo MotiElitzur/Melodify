@@ -10,7 +10,6 @@ class UserLoggedInUseCase @Inject constructor(
 
     override suspend fun execute(params: Nothing?): Boolean {
         try {
-            throw Exception("Not implemented")
             return authRepository.isUserAuthLoggedIn()
         } catch (e: Exception) {
             throw e

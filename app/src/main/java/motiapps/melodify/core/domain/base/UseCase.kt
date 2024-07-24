@@ -8,7 +8,13 @@ abstract class UseCase<Input, Output> {
     operator fun invoke(params: Input? = null): Flow<Resource<Output>> = flow {
         try {
             val result = execute(params)
-            emit(Resource.Success(result))
+
+            if (result is Resource<*>) {
+                @Suppress("UNCHECKED_CAST")
+                emit(result as Resource<Output>)
+            } else {
+                emit(Resource.Success(result))
+            }
         } catch (e: Exception) {
             emit(Resource.Error(e))
         }

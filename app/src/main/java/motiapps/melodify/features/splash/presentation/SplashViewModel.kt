@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class SplashViewModel @Inject constructor(
     private val userLoggedInUseCase: UserLoggedInUseCase,
-    private val savedStateHandle: SavedStateHandle
+    savedStateHandle: SavedStateHandle
 ) : BaseSavedStateViewModel<SplashState, SplashEvent>(savedStateHandle = savedStateHandle) {
 
     // region init
