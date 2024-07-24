@@ -3,11 +3,14 @@ package motiapps.melodify.core.presentation.base
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import motiapps.melodify.core.presentation.base.error.ErrorHandler
+import javax.inject.Inject
 
-abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?>(
-    private val savedStateHandle: SavedStateHandle
+abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> (
+    private val savedStateHandle: SavedStateHandle,
 ) : ViewModel() {
 
     // region State

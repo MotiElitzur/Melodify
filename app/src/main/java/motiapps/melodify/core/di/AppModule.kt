@@ -20,6 +20,9 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import motiapps.melodify.core.data.repository.impl.LoginRepositoryImpl
+import motiapps.melodify.core.domain.repository.LoginRepository
+import motiapps.melodify.core.presentation.base.error.ErrorHandler
 import javax.inject.Singleton
 
 @Module
@@ -30,6 +33,25 @@ object AppModule {
     @Singleton
     fun provideApplication(@ApplicationContext app: Context): App {
         return app as App
+    }
+
+    @Provides
+    @Singleton
+    fun provideErrorHandler(@ApplicationContext context: Context): ErrorHandler {
+        return ErrorHandler(context)
+    }
+
+    @Provides
+    @Singleton
+    fun provideAuthRepository(firebaseAuth: FirebaseAuth): AuthRepository {
+        return AuthRepositoryImpl(firebaseAuth)
+    }
+
+
+    @Provides
+    @Singleton
+    fun provideLoginRepository(firebaseAuth: FirebaseAuth): LoginRepository {
+        return LoginRepositoryImpl(firebaseAuth)
     }
 
     @Provides
