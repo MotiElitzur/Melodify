@@ -35,11 +35,11 @@ object AppModule {
         return app as App
     }
 
-    @Provides
-    @Singleton
-    fun provideErrorHandler(@ApplicationContext context: Context): ErrorHandler {
-        return ErrorHandler(context)
-    }
+//    @Provides
+//    @Singleton
+//    fun provideErrorHandler(@ApplicationContext context: Context): ErrorHandler {
+//        return ErrorHandler(context)
+//    }
 
     @Provides
     @Singleton
@@ -54,17 +54,17 @@ object AppModule {
         return LoginRepositoryImpl(firebaseAuth)
     }
 
-    @Provides
-    @Singleton
-    fun provideNavControllerManager(): NavControllerManager {
-        return NavControllerManager()
-    }
+//    @Provides
+//    @Singleton
+//    fun provideNavControllerManager(): NavControllerManager {
+//        return NavControllerManager()
+//    }
 
-    @Provides
-    @Singleton
-    fun provideDataRepository(): DataRepository {
-        return DataRepository()
-    }
+//    @Provides
+//    @Singleton
+//    fun provideDataRepository(): DataRepository {
+//        return DataRepository()
+//    }
 
 //    @Provides
 //    @Singleton

@@ -19,7 +19,6 @@ import javax.inject.Inject
 @HiltViewModel
 class LoginViewModel @Inject constructor(
     private val loginUseCases: LoginUseCases,
-    private val errorHandler: ErrorHandler,
     savedStateHandle: SavedStateHandle
 ) : BaseSavedStateViewModel<LoginState, LoginEvent>(savedStateHandle = savedStateHandle) {
 
@@ -27,7 +26,9 @@ class LoginViewModel @Inject constructor(
 
     override fun createInitialState(): LoginState = LoginState(
         isLoading = false
-    )
+    ).also {
+        println("LoginViewModel: createInitialState $it")
+    }
 
     override fun triggerEvent(event: LoginEvent) {
         viewModelScope.launch {
@@ -38,6 +39,14 @@ class LoginViewModel @Inject constructor(
                         state.copy(
                             isLoading = false,
                             route = NavDirections.Loading.route
+                        )
+                    }
+                }
+                is LoginEvent.SetStartRegister -> {
+                    setState {
+                        state.copy(
+                            isLoading = false,
+                            route = NavDirections.Register.route
                         )
                     }
                 }
@@ -59,17 +68,6 @@ class LoginViewModel @Inject constructor(
                     triggerEvent(performLogin {
                         loginUseCases.loginAnonymousUseCase()
                     })
-
-
-//                        when (val resource = loginUseCases.loginAnonymousUseCase()) {
-//                            is Resource.Success -> {
-//                                triggerEvent(LoginEvent.SetLoginSuccessState)
-//                            }
-//                            is Resource.Error -> {
-//                                triggerEvent(LoginEvent.SetErrorState(resource.errorType.getErrorMessage()))
-//                            }
-//                        }
-
                 }
                 is LoginEvent.SetEmailAndPasswordState -> {
 
@@ -95,19 +93,6 @@ class LoginViewModel @Inject constructor(
                             password = event.password
                         ))
                     })
-
-//                    when (val resource = loginUseCases.loginWithEmailUseCase(LoginEmailUseCaseInput(
-//                            email = event.email,
-//                            password = event.password))) {
-//                        is Resource.Success -> {
-//                            triggerEvent(LoginEvent.SetLoginSuccessState)
-//                        }
-//                        is Resource.Error -> {
-//                            println("Error: ${resource.exception} errorHandler: $errorHandler")
-//                            triggerEvent(LoginEvent.SetErrorState(resource.errorType.getErrorMessage()))
-//                        }
-//                    }
-
                 }
             }
         }
@@ -123,7 +108,6 @@ class LoginViewModel @Inject constructor(
             }
         }
     }
-
 
     private fun validateEmail(email: String): Boolean {
         // Simple email validation (can be improved with regex)

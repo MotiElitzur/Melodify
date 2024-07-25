@@ -3,7 +3,6 @@ package motiapps.melodify.features.login.domain.usecase
 import com.google.firebase.auth.FirebaseUser
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.domain.base.SuspendUseCase
-import motiapps.melodify.core.domain.base.UseCase
 import motiapps.melodify.core.domain.repository.LoginRepository
 import motiapps.melodify.features.login.domain.LoginEmailUseCaseInput
 import javax.inject.Inject

@@ -8,6 +8,7 @@ import androidx.navigation.compose.rememberNavController
 import motiapps.melodify.features.home.HomeScreen
 import motiapps.melodify.features.loading.LoadingScreen
 import motiapps.melodify.features.login.LoginScreen
+import motiapps.melodify.features.register.RegisterScreen
 
 @Composable
 fun NavGraph(initialRoute: String) {
@@ -19,6 +20,13 @@ fun NavGraph(initialRoute: String) {
 
         composable(NavDirections.Login.route) {
             LoginScreen(
+                viewModel = hiltViewModel(),
+                navController = navController
+            )
+        }
+
+        composable(NavDirections.Register.route) {
+            RegisterScreen(
                 viewModel = hiltViewModel(),
                 navController = navController
             )

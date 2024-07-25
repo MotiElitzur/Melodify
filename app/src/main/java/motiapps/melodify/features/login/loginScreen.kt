@@ -29,9 +29,10 @@ import androidx.navigation.NavController
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
 
-    println("LoginScreen created")
-
     val state by viewModel.uiState.collectAsState()
+
+    println("LoginScreen created state: $state")
+
 
     var email by remember { mutableStateOf("") }
     var password by remember {
@@ -90,6 +91,18 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         ) {
             Text(text = "Continue without login")
+        }
+
+        Spacer(modifier = Modifier.height(8.dp))
+
+        TextButton(
+            onClick = {
+                println("Register pressed")
+                viewModel.triggerEvent(LoginEvent.SetStartRegister)
+            },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text(text = "Register")
         }
 
         if (state.isLoading) {

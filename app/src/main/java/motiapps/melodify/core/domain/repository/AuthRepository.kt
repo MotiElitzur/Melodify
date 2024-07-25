@@ -1,6 +1,7 @@
 package motiapps.melodify.core.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
+import motiapps.melodify.core.domain.base.Resource
 
 interface AuthRepository {
 
@@ -8,5 +9,5 @@ interface AuthRepository {
 
     suspend fun getAuthUserId(): String?
 
-    suspend fun isUserAuthLoggedIn(): Boolean
+    suspend fun isUserAuthLoggedIn(): Resource<Boolean>
 }
