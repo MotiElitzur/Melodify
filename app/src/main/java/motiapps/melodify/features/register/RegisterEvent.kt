@@ -7,6 +7,6 @@ sealed class RegisterEvent: IViewEvent {
     data object SetContinueAsGuestState : RegisterEvent()
     data object SetLoginSuccessState : RegisterEvent()
     data class SetErrorState(val error: String) : RegisterEvent()
-    data class SetEmailAndPasswordState(val email: String, val password: String) : RegisterEvent()
+    data class SetRegisterDetailsState(val firstName: String, val lastName: String, val email: String, val password: String) : RegisterEvent()
     data object SetStartRegister : RegisterEvent()
 }

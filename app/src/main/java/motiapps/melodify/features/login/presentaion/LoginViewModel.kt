@@ -1,18 +1,18 @@
-package motiapps.melodify.features.login
+package motiapps.melodify.features.login.presentaion
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import motiapps.melodify.core.common.Utils
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.features.login.domain.usecase.LoginUseCases
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
-import motiapps.melodify.core.presentation.base.error.ErrorHandler
 import motiapps.melodify.core.presentation.base.error.ErrorHandler.Companion.getErrorMessage
 import motiapps.melodify.core.presentation.base.error.LoginErrorType
 import motiapps.melodify.core.presentation.navigation.NavDirections
+import motiapps.melodify.features.login.LoginData
 import motiapps.melodify.features.login.domain.LoginEmailUseCaseInput
 import javax.inject.Inject
 
@@ -22,19 +22,16 @@ class LoginViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseSavedStateViewModel<LoginState, LoginEvent>(savedStateHandle = savedStateHandle) {
 
-    // region Override Methods
 
+    // region Override Methods
     override fun createInitialState(): LoginState = LoginState(
         isLoading = false
-    ).also {
-        println("LoginViewModel: createInitialState $it")
-    }
+    )
 
     override fun triggerEvent(event: LoginEvent) {
         viewModelScope.launch {
             when (event) {
                 is LoginEvent.SetLoginSuccessState -> {
-                    println("Login Success")
                     setState {
                         state.copy(
                             isLoading = false,
@@ -44,10 +41,7 @@ class LoginViewModel @Inject constructor(
                 }
                 is LoginEvent.SetStartRegister -> {
                     setState {
-                        state.copy(
-                            isLoading = false,
-                            route = NavDirections.Register.route
-                        )
+                        state.copy(route = NavDirections.Register.route)
                     }
                 }
                 is LoginEvent.SetErrorState -> {
@@ -58,65 +52,53 @@ class LoginViewModel @Inject constructor(
                         )
                     }
                 }
-                is LoginEvent.SetContinueAsGuestState -> {
+                is LoginEvent.SaveToNextState -> {
                     setState {
                         state.copy(
-                            isLoading = true,
+                            route = null
+                        )
+                    }
+                }
+                is LoginEvent.SetContinueAsGuestState -> {
+                    setState { state.copy(isLoading = true) }
+                    performLogin { loginUseCases.loginAnonymousUseCase() }
+                }
+                is LoginEvent.SetLoginDataState -> {
+
+                    val loginData: LoginData = event.loginData
+
+                    setState {
+                        state.copy(
+                            email = loginData.email,
+                            password = loginData.password
                         )
                     }
 
-                    triggerEvent(performLogin {
-                        loginUseCases.loginAnonymousUseCase()
-                    })
-                }
-                is LoginEvent.SetEmailAndPasswordState -> {
-
-                    if (!validateEmail(event.email)) {
+                    if (!Utils.isEmailValid(loginData.email)) {
                         triggerEvent(LoginEvent.SetErrorState(LoginErrorType.InvalidEmail.getErrorMessage()))
                         return@launch
                     }
-
-                    if (!validatePassword(event.password)) {
+                    if (!Utils.isPasswordValid(loginData.password)) {
                         triggerEvent(LoginEvent.SetErrorState(LoginErrorType.InvalidPassword.getErrorMessage()))
                         return@launch
                     }
-
-                    setState {
-                        state.copy(
-                            isLoading = true,
-                        )
-                    }
-
-                    triggerEvent(performLogin {
+                    setState { state.copy(isLoading = true) }
+                    performLogin {
                         loginUseCases.loginWithEmailUseCase(LoginEmailUseCaseInput(
-                            email = event.email,
-                            password = event.password
+                            email = loginData.email,
+                            password = loginData.password
                         ))
-                    })
+                    }
                 }
             }
         }
     }
 
-    private suspend fun performLogin(loginAction: suspend () -> Resource<FirebaseUser>): LoginEvent {
-        return when (val resource = loginAction()) {
-            is Resource.Success -> {
-                LoginEvent.SetLoginSuccessState
-            }
-            is Resource.Error -> {
-                LoginEvent.SetErrorState(resource.errorType.getErrorMessage())
-            }
+    private suspend fun performLogin(loginAction: suspend () -> Resource<FirebaseUser>) {
+        when (val resource = loginAction()) {
+            is Resource.Success -> triggerEvent(LoginEvent.SetLoginSuccessState)
+            is Resource.Error -> triggerEvent(LoginEvent.SetErrorState(resource.errorType.getErrorMessage()))
         }
-    }
-
-    private fun validateEmail(email: String): Boolean {
-        // Simple email validation (can be improved with regex)
-        return email.isNotEmpty() && android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun validatePassword(password: String): Boolean {
-        // Password must be at least 6 characters long
-        return password.length >= 6
     }
 
     // endregion

@@ -11,10 +11,14 @@ class ErrorHandler(private val context: Context) {
 
                 LoginErrorType.InvalidEmail -> "Invalid email"
                 LoginErrorType.InvalidPassword -> "Password must be at least 6 characters long"
+                LoginErrorType.InvalidCredentials -> "Invalid credentials"
                 LoginErrorType.UserNotFound -> "User not found"
                 LoginErrorType.NoInternet -> "No internet connection"
 
-                else -> "context.getString(R.string.unknown_error)"
+                RegisterErrorType.WeakPassword -> "Password must be at least 6 characters long"
+                RegisterErrorType.UserAlreadyExists -> "User already exists"
+
+                else -> "Unknown error"
             }
         }
     }

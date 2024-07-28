@@ -33,13 +33,12 @@ fun RegisterScreen(viewModel: RegisterViewModel, navController: NavController) {
 
     println("RegisterScreen created state: $state")
 
-
     var firstName by remember { mutableStateOf("") }
     var lastName by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
-    var errorMessage by remember { mutableStateOf("") }
+    var errorMessage by remember { mutableStateOf(state.error ?: "") }
 
     Column(
         modifier = Modifier
@@ -80,7 +79,9 @@ fun RegisterScreen(viewModel: RegisterViewModel, navController: NavController) {
 
         TextField(
             value = confirmPassword,
-            onValueChange = { confirmPassword = it },
+            onValueChange = { confirmPassword = it
+                viewModel.triggerEvent(RegisterEvent.SetRegisterDetailsState(firstName, lastName, email, password))
+            },
             label = { Text("Confirm Password") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
             modifier = Modifier.fillMaxWidth()
@@ -101,6 +102,7 @@ fun RegisterScreen(viewModel: RegisterViewModel, navController: NavController) {
                     errorMessage = "Passwords do not match"
                 } else {
                     errorMessage = ""
+                    viewModel.triggerEvent(RegisterEvent.SetStartRegister)
                     // Call register function in ViewModel here
                     // Example: viewModel.register(email, password, firstName, lastName)
                 }

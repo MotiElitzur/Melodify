@@ -19,32 +19,10 @@ class LoginRepositoryImpl @Inject constructor(
 
     override suspend fun loginWithEmail(email: String, password: String): Resource<FirebaseUser> {
         return performLogin { firebaseAuth.signInWithEmailAndPassword(email, password).await() }
-//        return try {
-//            val authResult: AuthResult = firebaseAuth.signInWithEmailAndPassword(email, password).await()
-//            val user = authResult.user
-//            if (user != null) {
-//                Resource.Success(user)
-//            } else {
-//                Resource.Error(Exception("Login Authentication failed: user is null"))
-//            }
-//        } catch (exception: Exception) {
-//            Resource.Error(exception)
-//        }
     }
 
     override suspend fun loginAnonymously(): Resource<FirebaseUser> {
         return performLogin { firebaseAuth.signInAnonymously().await() }
-//        return try {
-//            val authResult: AuthResult = firebaseAuth.signInAnonymously().await()
-//            val user = authResult.user
-//            if (user != null) {
-//                Resource.Success(user)
-//            } else {
-//                Resource.Error(Exception("Login Authentication failed: user is null"))
-//            }
-//        } catch (exception: Exception) {
-//            Resource.Error(exception)
-//        }
     }
 
     override suspend fun logout(): Resource<Boolean> {
@@ -69,7 +47,7 @@ class LoginRepositoryImpl @Inject constructor(
             val errorType = when (exception) {
                 is FirebaseAuthInvalidUserException -> LoginErrorType.UserNotFound
                 is FirebaseNetworkException -> LoginErrorType.NoInternet
-                is FirebaseAuthInvalidCredentialsException -> LoginErrorType.InvalidEmail // or InvalidPassword based on the exception details
+                is FirebaseAuthInvalidCredentialsException -> LoginErrorType.InvalidCredentials
                 else -> BaseErrorType.Unknown
             }
             Resource.Error(exception, errorType)
