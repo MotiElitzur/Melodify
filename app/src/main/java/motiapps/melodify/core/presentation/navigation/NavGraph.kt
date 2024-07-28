@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import motiapps.melodify.features.home.HomeScreen
 import motiapps.melodify.features.loading.LoadingScreen
-import motiapps.melodify.features.login.LoginScreen
+import motiapps.melodify.features.login.presentaion.LoginScreen
 import motiapps.melodify.features.register.RegisterScreen
 
 @Composable
@@ -16,7 +16,10 @@ fun NavGraph(initialRoute: String) {
     val startDestination = NavDirections.fromName(initialRoute)
     val navController = rememberNavController()
 
-    NavHost(navController = navController, startDestination = startDestination.route) {
+    NavHost(
+        navController = navController,
+        startDestination = startDestination.route,
+    ) {
 
         composable(NavDirections.Login.route) {
             LoginScreen(

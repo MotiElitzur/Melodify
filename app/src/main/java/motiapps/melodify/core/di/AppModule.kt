@@ -3,8 +3,8 @@ package motiapps.melodify.core.di
 import android.content.Context
 import androidx.room.Room
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
 import motiapps.melodify.core.App
-import motiapps.melodify.core.data.repository.base.DataRepository
 import motiapps.melodify.core.data.repository.impl.AuthRepositoryImpl
 import motiapps.melodify.core.data.repository.impl.UserRepositoryImpl
 import motiapps.melodify.core.data.source.AppDatabase
@@ -14,7 +14,6 @@ import motiapps.melodify.core.domain.repository.UserRepository
 import motiapps.melodify.core.domain.usecases.GetUserUseCase
 import motiapps.melodify.core.domain.usecases.InsertUserUseCase
 import motiapps.melodify.core.domain.usecases.UserUseCases
-import motiapps.melodify.core.presentation.navigation.NavControllerManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,7 +21,8 @@ import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import motiapps.melodify.core.data.repository.impl.LoginRepositoryImpl
 import motiapps.melodify.core.domain.repository.LoginRepository
-import motiapps.melodify.core.presentation.base.error.ErrorHandler
+import motiapps.melodify.core.domain.repository.RegisterRepository
+import motiapps.melodify.features.register.data.RegisterRepositoryImpl
 import javax.inject.Singleton
 
 @Module
@@ -47,11 +47,16 @@ object AppModule {
         return AuthRepositoryImpl(firebaseAuth)
     }
 
-
     @Provides
     @Singleton
     fun provideLoginRepository(firebaseAuth: FirebaseAuth): LoginRepository {
         return LoginRepositoryImpl(firebaseAuth)
+    }
+
+    @Provides
+    @Singleton
+    fun provideRegisterRepository(firebaseAuth: FirebaseAuth, firestore: FirebaseFirestore): RegisterRepository {
+        return RegisterRepositoryImpl(firebaseAuth, firestore)
     }
 
 //    @Provides

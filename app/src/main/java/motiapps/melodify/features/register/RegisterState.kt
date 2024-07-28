@@ -8,5 +8,9 @@ data class RegisterState (
     val isLoading: Boolean,
     val error: String? = null,
     val route: String? = null,
+    val email: String? = null,
+    val password: String? = null,
+    val firstName: String? = null,
+    val lastName: String? = null,
 )
 : IViewState

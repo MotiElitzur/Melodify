@@ -2,12 +2,9 @@ package motiapps.melodify.core.presentation.base
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
-import motiapps.melodify.core.presentation.base.error.ErrorHandler
-import javax.inject.Inject
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 
 abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> (
     private val savedStateHandle: SavedStateHandle,
@@ -15,21 +12,22 @@ abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> 
 
     // region State
 
-    // Mutex for state synchronization
-
-    // Force the implementation of the initial state.
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
 
-    // Deciding which state management to use
-    val uiState: StateFlow<State> = savedStateHandle.getStateFlow("state", initialState)
+    private val _uiState = MutableStateFlow(initialState)
+    val uiState: StateFlow<State> = _uiState.asStateFlow()
 
-    // The current state to use outside the compose, that's require collectAsState.
     val state: State get() = uiState.value
 
-    protected fun setState(reduce: State.() -> State) {
-        viewModelScope.launch {
-            savedStateHandle["state"] = state.reduce()
+    private val stateMutex = Mutex()
+
+    protected suspend fun setState(reduce: suspend (State) -> State) {
+        // Avoid Race Condition and use always the latest state.
+        stateMutex.withLock {
+            val newState = reduce(_uiState.value)
+            _uiState.value = newState
+            savedStateHandle["state"] = newState
         }
     }
 
@@ -39,36 +37,5 @@ abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> 
 
     abstract fun triggerEvent(event: Event)
 
-//    private val _uiEvent: MutableSharedFlow<Event> = MutableSharedFlow()
-//    val uiEvent = _uiEvent.asSharedFlow()
-
-    //    protected fun setEvent(event: Event) {
-//        viewModelScope.launch { _uiEvent.emit(event) }
-//    }
-
-
     // endregion
-
-
-    //    fun launchCatching(block: suspend CoroutineScope.() -> Unit) =
-//        viewModelScope.launch(
-//            CoroutineExceptionHandler { _, throwable ->
-//                Log.d(ERROR_TAG, throwable.message.orEmpty())
-//            },
-//            block = block
-//        )
-
-
-
-//
-//    protected suspend fun <T> call(
-//        callFlow: Flow<T>,
-//        completionHandler: (collect: T) -> Unit = {}
-//    ) {
-//        callFlow
-//            .catch { }
-//            .collect {
-//                completionHandler.invoke(it)
-//            }
-//    }
 }
