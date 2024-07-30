@@ -15,8 +15,7 @@ abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> 
     private val initialState: State by lazy { createInitialState() }
     abstract fun createInitialState(): State
 
-    private val _uiState = MutableStateFlow(initialState)
-    val uiState: StateFlow<State> = _uiState.asStateFlow()
+    val uiState: StateFlow<State> = savedStateHandle.getStateFlow("state", initialState)
 
     val state: State get() = uiState.value
 
@@ -25,9 +24,7 @@ abstract class BaseSavedStateViewModel<State : IViewState, Event : IViewEvent?> 
     protected suspend fun setState(reduce: suspend (State) -> State) {
         // Avoid Race Condition and use always the latest state.
         stateMutex.withLock {
-            val newState = reduce(_uiState.value)
-            _uiState.value = newState
-            savedStateHandle["state"] = newState
+            savedStateHandle["state"] = reduce(state)
         }
     }
 

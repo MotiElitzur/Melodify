@@ -31,7 +31,6 @@ class RegisterViewModel @Inject constructor(
             when (event) {
                 is RegisterEvent.SetRegisterDetailsState -> handleSetRegisterDetailsState(event)
                 is RegisterEvent.SetStartRegister -> handleStartRegister()
-                else -> { /* No action needed */ }
             }
         }
     }
@@ -48,15 +47,23 @@ class RegisterViewModel @Inject constructor(
     }
 
     private suspend fun handleStartRegister() {
-        setState { state.copy(isLoading = true) }
+        if (state.email != null && state.password != null) {
 
-        val registerResult = registerUseCases.registerEmailPasswordUseCase(
-            RegisterMailInput(email = state.email, password = state.password)
-        )
+            setState { state.copy(isLoading = true) }
 
-        when (registerResult) {
-            is Resource.Success -> handleSuccessfulRegistration(registerResult.data)
-            is Resource.Error -> handleRegistrationError(registerResult)
+            val registerResult = registerUseCases.registerEmailPasswordUseCase(
+                RegisterMailInput(email = state.email!!, password = state.password!!)
+            )
+
+            when (registerResult) {
+                is Resource.Success -> handleSuccessfulRegistration(registerResult.data)
+                is Resource.Error -> handleRegistrationError(registerResult)
+            }
+        } else {
+            setState { state.copy(
+                isLoading = false,
+                error = "Email or password is Empty"
+            ) }
         }
     }
 
