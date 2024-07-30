@@ -11,7 +11,7 @@ class ErrorHandler(private val context: Context) {
 
                 LoginErrorType.InvalidEmail -> "Invalid email"
                 LoginErrorType.InvalidPassword -> "Password must be at least 6 characters long"
-                LoginErrorType.InvalidCredentials -> "Invalid credentials"
+                LoginErrorType.InvalidCredentials -> "The email or password is incorrect"
                 LoginErrorType.UserNotFound -> "User not found"
                 LoginErrorType.NoInternet -> "No internet connection"
 

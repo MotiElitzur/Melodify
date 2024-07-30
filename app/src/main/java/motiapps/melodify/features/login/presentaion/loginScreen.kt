@@ -10,48 +10,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import motiapps.melodify.core.common.Utils
-import motiapps.melodify.features.login.LoginData
 
 @Composable
 fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
-    val state by viewModel.uiState.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
 
-    println("LoginScreen: $state, ")
-
-    // Use remember for email and password
-    var email by remember { mutableStateOf(state.email ?: "") }
-    var password by remember { mutableStateOf(state.password ?: "") }
-
-    // Use remember for loginEnabled
-    val isLoginEnabled by remember(email, password) {
-        derivedStateOf { Utils.isEmailValid(email) && Utils.isPasswordValid(password) }
-    }
-
-    // Handle navigation in a LaunchedEffect
-    LaunchedEffect(state.route) {
-        println("LoginScreen: LaunchedEffect: ${state.route}")
-        state.route?.let { route ->
-
+    LaunchedEffect(uiState.navigationRoute) {
+        uiState.navigationRoute?.let { route ->
             navController.navigate(route)
-            viewModel.triggerEvent(LoginEvent.SaveToNextState)
+            viewModel.triggerEvent(LoginEvent.NavigationHandled)
         }
     }
+
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -59,101 +45,126 @@ fun LoginScreen(viewModel: LoginViewModel, navController: NavController) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Login Screen", style = MaterialTheme.typography.bodyLarge)
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        EmailTextField(email) { email = it
-        viewModel.triggerEvent(LoginEvent.SetLoginDataState(LoginData(email, password)))
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        PasswordTextField(password) { password = it
-            viewModel.triggerEvent(LoginEvent.SetLoginDataState(LoginData(email, password)))
-        }
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        LoginButton(
-            isEnabled = isLoginEnabled,
-            isLoading = state.isLoading,
-            onClick = {
-                viewModel.triggerEvent(LoginEvent.SetLoginDataState(LoginData(email, password)))
-
-            }
+        Text(
+            text = "Welcome to Melodify",
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier.padding(bottom = 32.dp)
         )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        LoginForm(
+            email = uiState.email,
+            password = uiState.password,
+            confirmPassword = uiState.confirmPassword,
+            emailError = uiState.emailError,
+            passwordError = uiState.passwordError,
+//            confirmPasswordError = uiState.confirmPasswordError,
+            isLoginEnabled = uiState.isLoginEnabled,
+            isLoading = uiState.isLoading,
+            onEmailChange = { viewModel.triggerEvent(LoginEvent.EmailChanged(it)) },
+            onPasswordChange = { viewModel.triggerEvent(LoginEvent.PasswordChanged(it)) },
+//            onConfirmPasswordChange = { viewModel.triggerEvent(LoginEvent.ConfirmPasswordChanged(it)) },
+            onFieldFocusChanged = { field, isFocused ->
+                viewModel.triggerEvent(LoginEvent.FieldFocusChanged(field, isFocused))
+            },
+            onLoginClick = { viewModel.triggerEvent(LoginEvent.LoginClicked) },
+            onContinueAsGuestClick = { viewModel.triggerEvent(LoginEvent.ContinueAsGuestClicked) },
+            onRegisterClick = { viewModel.triggerEvent(LoginEvent.RegisterClicked) }
+        )
 
-        ContinueAsGuestButton(viewModel)
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        RegisterButton(viewModel)
-
-        if (state.isLoading) {
-            Spacer(modifier = Modifier.height(16.dp))
-            CircularProgressIndicator()
+        if (uiState.isLoading) {
+            CircularProgressIndicator(modifier = Modifier.padding(top = 16.dp))
         }
 
-        if (state.error != null) {
-            Spacer(modifier = Modifier.height(16.dp))
-            Text(text = state.error!!)
+        uiState.error?.let { error ->
+            Text(
+                text = error,
+                color = MaterialTheme.colorScheme.error,
+                modifier = Modifier.padding(top = 16.dp)
+            )
         }
     }
 }
 
 @Composable
-private fun EmailTextField(email: String, onEmailChange: (String) -> Unit) {
-    TextField(
+private fun LoginForm(
+    email: String,
+    password: String,
+    confirmPassword: String,
+    emailError: String?,
+    passwordError: String?,
+//    confirmPasswordError: String?,
+    isLoginEnabled: Boolean,
+    isLoading: Boolean,
+    onEmailChange: (String) -> Unit,
+    onPasswordChange: (String) -> Unit,
+//    onConfirmPasswordChange: (String) -> Unit,
+    onFieldFocusChanged: (LoginField, Boolean) -> Unit,
+    onLoginClick: () -> Unit,
+    onContinueAsGuestClick: () -> Unit,
+    onRegisterClick: () -> Unit
+) {
+    OutlinedTextField(
         value = email,
         onValueChange = onEmailChange,
         label = { Text("Email") },
-        modifier = Modifier.fillMaxWidth()
+        isError = emailError != null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .onFocusChanged { onFieldFocusChanged(LoginField.EMAIL, it.isFocused) }
     )
-}
+    emailError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
 
-@Composable
-private fun PasswordTextField(password: String, onPasswordChange: (String) -> Unit) {
-    TextField(
+    Spacer(modifier = Modifier.height(8.dp))
+
+    OutlinedTextField(
         value = password,
         onValueChange = onPasswordChange,
         label = { Text("Password") },
-        modifier = Modifier.fillMaxWidth()
+        visualTransformation = PasswordVisualTransformation(),
+        isError = passwordError != null,
+        modifier = Modifier
+            .fillMaxWidth()
+            .onFocusChanged { onFieldFocusChanged(LoginField.PASSWORD, it.isFocused) }
     )
-}
+    passwordError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
 
-@Composable
-private fun LoginButton(isEnabled: Boolean, isLoading: Boolean, onClick: () -> Unit) {
+//    Spacer(modifier = Modifier.height(8.dp))
+//
+//    OutlinedTextField(
+//        value = confirmPassword,
+//        onValueChange = onConfirmPasswordChange,
+//        label = { Text("Confirm Password") },
+//        visualTransformation = PasswordVisualTransformation(),
+//        isError = confirmPasswordError != null,
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .onFocusChanged { onFieldFocusChanged(LoginField.CONFIRM_PASSWORD, it.isFocused) }
+//    )
+//    confirmPasswordError?.let { Text(it, color = MaterialTheme.colorScheme.error) }
+//
+//    Spacer(modifier = Modifier.height(16.dp))
+
     Button(
-        onClick = onClick,
+        onClick = onLoginClick,
         modifier = Modifier.fillMaxWidth(),
-        enabled = isEnabled && !isLoading
+        enabled = isLoginEnabled && !isLoading
     ) {
         Text(text = "Login")
     }
-}
 
-@Composable
-private fun ContinueAsGuestButton(viewModel: LoginViewModel) {
+    Spacer(modifier = Modifier.height(8.dp))
+
     TextButton(
-        onClick = {
-            viewModel.triggerEvent(LoginEvent.SetContinueAsGuestState)
-        },
+        onClick = onContinueAsGuestClick,
         modifier = Modifier.fillMaxWidth()
     ) {
-        Text(text = "Continue without login")
+        Text(text = "Continue as Guest")
     }
-}
 
-@Composable
-private fun RegisterButton(viewModel: LoginViewModel) {
+    Spacer(modifier = Modifier.height(8.dp))
+
     TextButton(
-        onClick = {
-            println("Register pressed")
-            viewModel.triggerEvent(LoginEvent.SetStartRegister)
-        },
+        onClick = onRegisterClick,
         modifier = Modifier.fillMaxWidth()
     ) {
         Text(text = "Register")

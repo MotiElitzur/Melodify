@@ -1,13 +1,19 @@
 package motiapps.melodify.features.login.presentaion
 
 import motiapps.melodify.core.presentation.base.IViewEvent
-import motiapps.melodify.features.login.LoginData
 
-sealed class LoginEvent: IViewEvent {
-    data object SetLoginSuccessState : LoginEvent()
-    data class SetErrorState(val error: String) : LoginEvent()
-    data class SetLoginDataState(val loginData: LoginData) : LoginEvent()
-    data object SaveToNextState : LoginEvent()
-    data object SetContinueAsGuestState : LoginEvent()
-    data object SetStartRegister : LoginEvent()
+sealed class LoginEvent : IViewEvent {
+    data class EmailChanged(val email: String) : LoginEvent()
+    data class PasswordChanged(val password: String) : LoginEvent()
+//    data class ConfirmPasswordChanged(val confirmPassword: String) : LoginEvent()
+    data class FieldFocusChanged(val field: LoginField, val isFocused: Boolean) : LoginEvent()
+    data object LoginClicked : LoginEvent()
+    data object ContinueAsGuestClicked : LoginEvent()
+    data object RegisterClicked : LoginEvent()
+    data object NavigationHandled : LoginEvent()
+}
+
+enum class LoginField {
+    EMAIL, PASSWORD,
+//    CONFIRM_PASSWORD
 }
