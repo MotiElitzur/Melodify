@@ -3,7 +3,12 @@ package motiapps.melodify.core.domain.base
 import motiapps.melodify.core.presentation.base.error.BaseErrorType
 
 sealed class Resource<out T> {
-    class Success<out T>(val data: T) : Resource<T>()
+
+    class Success<out T>(val data: T, val errorType: BaseErrorType? = null) : Resource<T>() {
+        init {
+            println("Success: $data")
+        }
+    }
     class Error(val exception: Exception, val errorType: BaseErrorType = BaseErrorType.Unknown) : Resource<Nothing>() {
 
         init {

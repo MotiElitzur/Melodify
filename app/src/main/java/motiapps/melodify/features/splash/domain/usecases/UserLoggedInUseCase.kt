@@ -1,8 +1,7 @@
 package motiapps.melodify.features.splash.domain.usecases
 
 import motiapps.melodify.core.domain.base.Resource
-import motiapps.melodify.core.domain.base.SuspendUseCase
-import motiapps.melodify.core.domain.base.UseCase
+import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.core.domain.repository.AuthRepository
 import javax.inject.Inject
 
