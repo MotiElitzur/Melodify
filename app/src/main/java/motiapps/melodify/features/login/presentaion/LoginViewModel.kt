@@ -20,7 +20,6 @@ class LoginViewModel @Inject constructor(
     savedStateHandle: SavedStateHandle
 ) : BaseSavedStateViewModel<LoginState, LoginEvent>(savedStateHandle = savedStateHandle) {
 
-
     // region Override Methods
     override fun createInitialState(): LoginState = LoginState()
 
