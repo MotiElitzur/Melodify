@@ -8,6 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import motiapps.melodify.core.domain.base.Resource
+import motiapps.melodify.core.domain.model.UserDto
 import motiapps.melodify.features.register.domain.repository.RegisterRepository
 import motiapps.melodify.core.presentation.base.error.BaseErrorType
 import motiapps.melodify.core.presentation.base.error.RegisterErrorType
@@ -47,11 +48,12 @@ class RegisterRepositoryImpl @Inject constructor(
     ): Resource<Boolean> {
 
         try {
-            val userDTO = hashMapOf(
-                "userId" to userId,
-                "firstName" to firstName,
-                "lastName" to lastName,
-                "creationTimestamp" to Timestamp.now()
+            val userDTO = UserDto(
+                id = userId,
+                firstName = firstName,
+                lastName = lastName,
+                email = firebaseAuth.currentUser?.email,
+                creationTimestamp = Timestamp.now()
             )
             firestore.collection("users").document(userId).set(userDTO).await()
             return Resource.Success(true)

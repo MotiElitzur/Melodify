@@ -12,7 +12,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import motiapps.melodify.core.presentation.navigation.NavGraph
-import motiapps.melodify.features.splash.presentation.SplashViewModel
+import motiapps.melodify.features.splash.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
 

@@ -11,5 +11,7 @@ interface FirebaseDataSource {
 
     suspend fun insertUser(userId: String, user: UserDto): Resource<Unit>
 
+    suspend fun updateUser(userId: String, dataToUpdate: Map<String, Any>): Resource<Unit>
+
     suspend fun deleteUser(userId: String): Resource<Unit>
 }
