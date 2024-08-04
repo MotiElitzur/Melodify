@@ -2,6 +2,7 @@ package motiapps.melodify.core.data.repository
 
 import motiapps.melodify.core.data.model.User
 import motiapps.melodify.core.data.model.toDto
+import motiapps.melodify.core.data.model.update
 import motiapps.melodify.core.data.source.local.UserDao
 import motiapps.melodify.core.data.source.remote.FirebaseDataSource
 import motiapps.melodify.core.data.source.remote.FirebaseDataSourceImpl
@@ -61,6 +62,24 @@ class UserRepositoryImpl @Inject constructor(
             val result = userRemoteDataSource.insertUser(user.id, user.toDto())
             if (result is Resource.Success) {
                 cachedUser = user
+            }
+            result
+        } catch (e: Exception) {
+            Resource.Error(e)
+        }
+    }
+
+    override suspend fun updateUser(
+        userId: String,
+        dataToUpdate: Map<String, Any>
+    ): Resource<Unit> {
+        return try {
+            // Update the local data source
+            userLocalDataSource.updateUserFields(userId, dataToUpdate)
+            val result = userRemoteDataSource.updateUser(userId, dataToUpdate)
+            if (result is Resource.Success) {
+                // Update the cached user if the remote update is successful
+                cachedUser?.update(dataToUpdate)
             }
             result
         } catch (e: Exception) {

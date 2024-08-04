@@ -1,4 +1,4 @@
-package motiapps.melodify.features.splash.domain.usecases
+package motiapps.melodify.core.domain.usecases.auth
 
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase

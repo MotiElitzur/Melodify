@@ -7,7 +7,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import motiapps.melodify.features.loading.LoadingViewModel
+import motiapps.melodify.features.loading.presentation.LoadingViewModel
 
 @Composable
 fun HomeScreen(viewModel: LoadingViewModel, navController: NavController) {

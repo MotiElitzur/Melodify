@@ -11,5 +11,7 @@ interface UserRepository {
 
     suspend fun insertUser(user: User): Resource<Unit>
 
+    suspend fun updateUser(userId: String, dataToUpdate: Map<String, Any>): Resource<Unit>
+
     suspend fun deleteUser(userId: String): Resource<Unit>
 }

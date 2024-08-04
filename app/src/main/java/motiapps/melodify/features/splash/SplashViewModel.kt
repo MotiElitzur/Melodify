@@ -1,13 +1,15 @@
-package motiapps.melodify.features.splash.presentation
+package motiapps.melodify.features.splash
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import motiapps.melodify.features.splash.domain.usecases.UserLoggedInUseCase
+import motiapps.melodify.core.domain.usecases.auth.UserLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.navigation.NavDirections
+import motiapps.melodify.features.splash.presentation.SplashEvent
+import motiapps.melodify.features.splash.presentation.SplashState
 import javax.inject.Inject
 
 @HiltViewModel

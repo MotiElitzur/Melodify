@@ -30,11 +30,4 @@ class FirebaseModule {
     ): FirebaseDataSource {
         return FirebaseDataSourceImpl(firebaseAuth, firestore)
     }
-
-
-//    @Provides
-//    @Singleton
-//    fun provideAuthService(firebaseAuth: FirebaseAuth): AuthService {
-//        return AuthService(firebaseAuth)
-//    }
 }

@@ -19,7 +19,7 @@ class FirebaseDataSourceImpl @Inject constructor(
             if (user != null) {
                 Resource.Success(user)
             } else {
-                Resource.Error(Exception("User not found"))
+                Resource.Error(Exception("getUserById User not found with id: $userId"))
             }
         } catch (e: Exception) {
             Resource.Error(e)
@@ -37,6 +37,15 @@ class FirebaseDataSourceImpl @Inject constructor(
     override suspend fun insertUser(userId: String, user: UserDto): Resource<Unit> {
         return try {
             firestore.collection("users").document().set(user).await()
+            Resource.Success(Unit)
+        } catch (e: Exception) {
+            Resource.Error(e)
+        }
+    }
+
+    override suspend fun updateUser(userId: String, dataToUpdate: Map<String, Any>): Resource<Unit> {
+        return try {
+            firestore.collection("users").document(userId).update(dataToUpdate).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e)
