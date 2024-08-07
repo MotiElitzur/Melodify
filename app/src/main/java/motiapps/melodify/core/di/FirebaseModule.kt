@@ -6,8 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import motiapps.melodify.core.data.source.remote.FirebaseDataSource
-import motiapps.melodify.core.data.source.remote.FirebaseDataSourceImpl
+import motiapps.melodify.core.common.user.domain.source.UserRemoteDataSource
+import motiapps.melodify.core.common.user.data.source.remote.UserRemoteDataSourceImpl
 import javax.inject.Singleton
 
 @Module
@@ -27,7 +27,7 @@ class FirebaseModule {
     fun provideFirebaseDataSource(
         firebaseAuth: FirebaseAuth,
         firestore: FirebaseFirestore
-    ): FirebaseDataSource {
-        return FirebaseDataSourceImpl(firebaseAuth, firestore)
+    ): UserRemoteDataSource {
+        return UserRemoteDataSourceImpl(firebaseAuth, firestore)
     }
 }

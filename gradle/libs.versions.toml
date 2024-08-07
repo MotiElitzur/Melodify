@@ -1,6 +1,6 @@
 [versions]
 kotlin = "2.0.0"
-gradlePlugin = "8.5.1"
+gradlePlugin = "8.5.1" # The gradle version itself handled in the gradle-wrapper.properties, currently 8.9
 ksp = "2.0.0-1.0.23"
 
 androidxCore = "1.13.1"

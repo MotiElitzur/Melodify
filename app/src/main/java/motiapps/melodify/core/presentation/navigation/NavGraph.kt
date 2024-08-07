@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import motiapps.melodify.features.home.HomeScreen
 import motiapps.melodify.features.loading.presentation.LoadingScreen
-import motiapps.melodify.features.login.presentaion.LoginScreen
+import motiapps.melodify.features.login.presentation.LoginScreen
 import motiapps.melodify.features.register.presentation.RegisterScreen
 
 @Composable

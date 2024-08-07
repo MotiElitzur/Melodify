@@ -1,6 +1,6 @@
 package motiapps.melodify.features.loading.domain.usecases
 
-import motiapps.melodify.core.data.model.User
+import motiapps.melodify.core.common.user.data.model.User
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.features.loading.domain.LoadingRepository

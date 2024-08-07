@@ -6,8 +6,8 @@ import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import motiapps.melodify.core.domain.base.Resource
-import motiapps.melodify.core.domain.model.UserPartialUpdate
-import motiapps.melodify.core.domain.usecases.UserUseCases
+import motiapps.melodify.core.common.user.domain.model.UserPartialUpdate
+import motiapps.melodify.core.common.user.domain.usecases.UserUseCases
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.base.error.ErrorHandler.Companion.getErrorMessage
 import motiapps.melodify.core.presentation.navigation.NavDirections
