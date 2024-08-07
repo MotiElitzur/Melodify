@@ -8,14 +8,14 @@ sealed class NavDirections {
     val route: String
         get() = this::class.simpleName?.lowercase() ?: ""
 
-    object Loading : NavDirections()
-    object Login : NavDirections()
-    object Register : NavDirections()
+    data object Loading : NavDirections()
+    data object Login : NavDirections()
+    data object Register : NavDirections()
 
-    object HomeFeature : NavDirections()
-    object Home : NavDirections()
-    object Profile : NavDirections()
-    object CreateChat : NavDirections()
+    data object HomeFeature : NavDirections()
+    data object Home : NavDirections()
+    data object Profile : NavDirections()
+    data object CreateChat : NavDirections()
 
     companion object {
         private val subclasses = NavDirections::class.sealedSubclasses

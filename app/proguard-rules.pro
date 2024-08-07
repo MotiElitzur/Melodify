@@ -25,3 +25,7 @@
 -keep class androidx.credentials.playservices.** {
   *;
 }
+
+-keepclassmembers class motiapps.melodify.core.domain.model.UserDto {
+    <init>();
+}

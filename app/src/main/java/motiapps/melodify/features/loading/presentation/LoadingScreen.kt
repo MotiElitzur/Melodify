@@ -42,7 +42,7 @@ fun LoadingScreen(
             ) {
                 Image(
                     painter = painterResource(id = R.drawable.img),
-                    contentDescription = "Loading Art",
+                    contentDescription = "Loading",
                     modifier = Modifier.size(150.dp)
                 )
                 Spacer(modifier = Modifier.height(16.dp))
