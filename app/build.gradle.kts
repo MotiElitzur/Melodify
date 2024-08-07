@@ -94,6 +94,9 @@ dependencies {
     implementation(libs.room.ktx)
     ksp(libs.room.compiler)
 
+    // dataStore
+    implementation(libs.datastore.preferences)
+
     // Compose
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
