@@ -8,7 +8,7 @@ import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import motiapps.melodify.core.domain.base.Resource
-import motiapps.melodify.core.domain.model.UserDto
+import motiapps.melodify.core.common.user.data.model.UserDto
 import motiapps.melodify.features.register.domain.repository.RegisterRepository
 import motiapps.melodify.core.presentation.base.error.BaseErrorType
 import motiapps.melodify.core.presentation.base.error.RegisterErrorType
@@ -53,7 +53,8 @@ class RegisterRepositoryImpl @Inject constructor(
                 firstName = firstName,
                 lastName = lastName,
                 email = firebaseAuth.currentUser?.email,
-                creationTimestamp = Timestamp.now()
+                creationTimestamp = Timestamp.now(),
+                isAnonymous = false
             )
             firestore.collection("users").document(userId).set(userDTO).await()
             return Resource.Success(true)
