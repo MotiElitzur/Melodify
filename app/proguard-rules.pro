@@ -26,6 +26,6 @@
   *;
 }
 
--keepclassmembers class motiapps.melodify.core.common.user.data.model.UserDto {
+-keepclassmembers class motiapps.melodify.common.user.data.model.UserDto {
     <init>();
 }

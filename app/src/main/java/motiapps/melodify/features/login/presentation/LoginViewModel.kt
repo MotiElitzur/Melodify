@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.core.common.Utils
+import motiapps.melodify.common.Utils
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.features.login.domain.usecase.LoginUseCases
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel

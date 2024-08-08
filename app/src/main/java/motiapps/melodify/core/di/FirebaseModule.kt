@@ -6,8 +6,8 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import motiapps.melodify.core.common.user.domain.source.UserRemoteDataSource
-import motiapps.melodify.core.common.user.data.source.remote.UserRemoteDataSourceImpl
+import motiapps.melodify.common.user.domain.source.UserRemoteDataSource
+import motiapps.melodify.common.user.data.source.remote.UserRemoteDataSourceImpl
 import javax.inject.Singleton
 
 @Module

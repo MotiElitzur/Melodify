@@ -6,10 +6,10 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
-import motiapps.melodify.core.common.datastore.data.model.PreferenceObject
-import motiapps.melodify.core.common.datastore.domain.usecase.PreferencesUseCases
-import motiapps.melodify.core.common.permissions.domain.usecase.CheckPermissionUseCase
-import motiapps.melodify.core.common.permissions.domain.usecase.PermissionsUseCases
+import motiapps.melodify.common.datastore.data.model.PreferenceObject
+import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
+import motiapps.melodify.common.permissions.domain.usecase.CheckPermissionUseCase
+import motiapps.melodify.common.permissions.domain.usecase.PermissionsUseCases
 import motiapps.melodify.core.domain.base.Resource
 import javax.inject.Inject
 
