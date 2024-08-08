@@ -15,7 +15,7 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import motiapps.melodify.core.common.permissions.di.ActivityContextProvider
+import motiapps.melodify.common.permissions.di.ActivityContextProvider
 import javax.inject.Inject
 
 @AndroidEntryPoint

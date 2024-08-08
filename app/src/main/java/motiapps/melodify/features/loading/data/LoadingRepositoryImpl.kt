@@ -1,8 +1,8 @@
 package motiapps.melodify.features.loading.data
 
-import motiapps.melodify.core.common.user.data.model.User
+import motiapps.melodify.common.user.data.model.User
 import motiapps.melodify.core.domain.base.Resource
-import motiapps.melodify.core.common.user.domain.repository.UserRepository
+import motiapps.melodify.common.user.domain.repository.UserRepository
 import motiapps.melodify.features.loading.domain.LoadingRepository
 import javax.inject.Inject
 
