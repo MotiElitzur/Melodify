@@ -7,5 +7,5 @@ interface LoginRepository {
 
     suspend fun loginWithEmail(email: String, password: String): Resource<FirebaseUser>
 
-    suspend fun loginAnonymously(): Resource<FirebaseUser>
+    suspend fun loginAnonymously(): Resource<Unit>
 }

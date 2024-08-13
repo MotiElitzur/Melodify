@@ -9,8 +9,9 @@ data class User(
     var firstName: String? = null,
     var lastName: String? = null,
     var email: String? = null,
-    val creationTimestamp: Timestamp? = null,
+    var creationTimestamp: Timestamp? = null,
     var lastActive: Timestamp? = null,
+    var isAnonymous: Boolean = false
 )
 
 fun User.toDto() = UserDto(
@@ -20,6 +21,7 @@ fun User.toDto() = UserDto(
     email = email,
     creationTimestamp = creationTimestamp,
     lastActive = lastActive,
+    isAnonymous = isAnonymous
 )
 
 fun User.update(updates: Map<String, Any>) {

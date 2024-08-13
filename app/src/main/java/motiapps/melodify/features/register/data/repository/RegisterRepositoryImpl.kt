@@ -5,10 +5,10 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import motiapps.melodify.common.user.data.model.User
 import motiapps.melodify.core.domain.base.Resource
-import motiapps.melodify.common.user.data.model.UserDto
+import motiapps.melodify.common.user.domain.usecases.UserUseCases
 import motiapps.melodify.features.register.domain.repository.RegisterRepository
 import motiapps.melodify.core.presentation.base.error.BaseErrorType
 import motiapps.melodify.core.presentation.base.error.RegisterErrorType
@@ -16,7 +16,7 @@ import javax.inject.Inject
 
 class RegisterRepositoryImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val userUseCases: UserUseCases
 ) : RegisterRepository {
 
     override suspend fun registerWithEmail(
@@ -45,10 +45,10 @@ class RegisterRepositoryImpl @Inject constructor(
         userId: String,
         firstName: String?,
         lastName: String?
-    ): Resource<Boolean> {
+    ): Resource<Unit> {
 
         try {
-            val userDTO = UserDto(
+            val user = User(
                 id = userId,
                 firstName = firstName,
                 lastName = lastName,
@@ -56,8 +56,8 @@ class RegisterRepositoryImpl @Inject constructor(
                 creationTimestamp = Timestamp.now(),
                 isAnonymous = false
             )
-            firestore.collection("users").document(userId).set(userDTO).await()
-            return Resource.Success(true)
+
+            return userUseCases.insertUser(user)
         } catch (exception: Exception) {
             return Resource.Error(exception)
         }

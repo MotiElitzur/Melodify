@@ -125,7 +125,7 @@ class LoginViewModel @Inject constructor(
         setState { state.copy(isLoading = false, navigationRoute = null) }
     }
 
-    private suspend fun performLogin(loginAction: suspend () -> Resource<FirebaseUser>) {
+    private suspend fun performLogin(loginAction: suspend () -> Resource<Any>) {
         setState { state.copy(isLoading = true, error = null) }
         when (val resource = loginAction()) {
             is Resource.Success -> navigateToLoading()

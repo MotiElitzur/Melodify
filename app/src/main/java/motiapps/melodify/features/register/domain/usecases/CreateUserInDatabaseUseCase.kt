@@ -8,9 +8,9 @@ import javax.inject.Inject
 
 class CreateUserInDatabaseUseCase @Inject constructor(
     private val registerRepository: RegisterRepository
-) : SuspendUseCase<CreateUserInput, Resource<Boolean>>() {
+) : SuspendUseCase<CreateUserInput, Resource<Unit>>() {
 
-    override suspend fun execute(params: CreateUserInput?): Resource<Boolean> {
+    override suspend fun execute(params: CreateUserInput?): Resource<Unit> {
 
         if (params?.userId == null) {
             return Resource.Error(Exception("User id is null"))
@@ -18,5 +18,4 @@ class CreateUserInDatabaseUseCase @Inject constructor(
 
         return registerRepository.createUserInDatabase(params.userId, params.firstName, params.lastName)
     }
-
 }

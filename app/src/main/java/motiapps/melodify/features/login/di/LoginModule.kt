@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ViewModelComponent
 import dagger.hilt.android.scopes.ViewModelScoped
+import motiapps.melodify.common.user.domain.usecases.UserUseCases
 import motiapps.melodify.features.login.data.LoginRepositoryImpl
 import motiapps.melodify.features.login.domain.repository.LoginRepository
 
@@ -15,7 +16,7 @@ object LoginModule {
 
     @Provides
     @ViewModelScoped
-    fun provideLoginRepository(firebaseAuth: FirebaseAuth): LoginRepository {
-        return LoginRepositoryImpl(firebaseAuth)
+    fun provideLoginRepository(firebaseAuth: FirebaseAuth, userUseCases: UserUseCases): LoginRepository {
+        return LoginRepositoryImpl(firebaseAuth, userUseCases)
     }
 }
