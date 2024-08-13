@@ -8,7 +8,11 @@ import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.platform.LocalContext
+import androidx.hilt.navigation.compose.hiltViewModel
+import motiapps.melodify.common.theme.ThemeViewModel
 
 
 private val LightColorScheme = lightColorScheme(
@@ -78,17 +82,23 @@ private val DarkColorScheme = darkColorScheme(
 
 @Composable
 fun AppTheme(
-    darkTheme: Boolean = isSystemInDarkTheme(),
+    themeViewModel: ThemeViewModel = hiltViewModel(),
+    systemDarkMode: Boolean = isSystemInDarkTheme(),
     dynamicColor: Boolean = true,
     content: @Composable() () -> Unit
 ) {
+
+    val uiState by themeViewModel.uiState.collectAsState()
+
+    val useDarkTheme = uiState.isDarkTheme ?: systemDarkMode
+
     val colorScheme = when {
         dynamicColor -> {
             val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            if (useDarkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
 
-        darkTheme -> DarkColorScheme
+        useDarkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
 

@@ -47,19 +47,19 @@ class PreferencesRepositoryImpl @Inject constructor(
         }
     }
 
-    override suspend fun <T> getPreference(key: String, defaultValue: T): Resource<T> = try {
-        val value = dataStore.data.map { it[getPreferenceKey(key, defaultValue)] ?: defaultValue }.first()
+    override suspend fun <T> getPreference(key: String, defaultValueType: T, resultCanBeNull: Boolean): Resource<T> = try {
+        val value = dataStore.data.map { it[getPreferenceKey(key, defaultValueType)] ?: if (!resultCanBeNull) defaultValueType else null }.first()
         Resource.Success(value as T)
     } catch (e: Exception) {
         Resource.Error(e)
     }
 
-    override fun <T> observePreference(key: String, defaultValue: T): Flow<Resource<T>> = flow {
+    override fun <T> observePreference(key: String, defaultValueType: T, resultCanBeNull: Boolean): Flow<Resource<T?>> = flow {
         try {
-            val preferenceKey = getPreferenceKey(key, defaultValue)
+            val preferenceKey = getPreferenceKey(key, defaultValueType)
 
             dataStore.data
-                .map { preferences -> preferences[preferenceKey] as? T ?: defaultValue }
+                .map { preferences -> preferences[preferenceKey] as? T ?: if (!resultCanBeNull) defaultValueType else null }
                 .distinctUntilChanged()
                 .collect { emit(Resource.Success(it)) }
         } catch (e: Exception) {

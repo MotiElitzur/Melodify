@@ -15,7 +15,7 @@ class GetPreferenceUseCase @Inject constructor(
             if (params == null) {
                 Resource.Error(Exception("Key is null"))
             } else {
-                repository.getPreference(key = params.key, defaultValue = params.value)
+                repository.getPreference(key = params.key, defaultValueType = params.value, resultCanBeNull = params.resultCanBeNull)
             }
         } catch (e: Exception) {
             Resource.Error(e)

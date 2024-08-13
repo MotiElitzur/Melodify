@@ -35,7 +35,35 @@ class HomeViewModel @Inject constructor(
             }
         }.launchIn(viewModelScope)
 
+
+        var isDarkMode = false
+
         viewModelScope.launch {
+
+            while (true) {
+                pref.setPreferenceUseCase(PreferenceObject("isDarkMode", isDarkMode)).let {
+                    when (it) {
+                        is Resource.Success -> {
+                            val value = it.data
+                            println("value = $value")
+                        }
+
+                        is Resource.Error -> {
+                            val exception = it.exception
+                            println("exception = $exception")
+                        }
+                    }
+                }
+
+                isDarkMode = !isDarkMode
+                kotlinx.coroutines.delay(1000)
+            }
+
+        }
+
+        viewModelScope.launch {
+
+
 
             when(val result = permissionUseCases.checkPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
                 is Resource.Success -> {
