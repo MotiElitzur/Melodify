@@ -37,7 +37,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun insertUser(userId: String, user: UserDto): Resource<Unit> {
         return try {
-            firestore.collection("users").document().set(user).await()
+            firestore.collection("users").document(userId).set(user).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e)

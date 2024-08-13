@@ -12,7 +12,7 @@ data class UserDto(
     var email: String? = null,
     var creationTimestamp: Timestamp? = null,
     var lastActive: Timestamp? = null,
-    var isAnonymous: Boolean = true
+    @field:JvmField var isAnonymous: Boolean = true
 ) {
     // No-argument constructor for deserialization
     constructor() : this("")
