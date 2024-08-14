@@ -1,16 +1,31 @@
 package motiapps.melodify.core.presentation.ui.theme
 
-import android.os.Build
+import android.view.WindowInsets
+import androidx.activity.ComponentActivity
 import androidx.compose.foundation.isSystemInDarkTheme
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.navigationBarsPadding
+import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.material3.ColorScheme
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.material3.darkColorScheme
 import androidx.compose.material3.dynamicDarkColorScheme
 import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.luminance
+import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import androidx.hilt.navigation.compose.hiltViewModel
 import motiapps.melodify.common.theme.ThemeViewModel
 
@@ -89,7 +104,6 @@ fun AppTheme(
 ) {
 
     val uiState by themeViewModel.uiState.collectAsState()
-
     val useDarkTheme = uiState.isDarkTheme ?: systemDarkMode
 
     val colorScheme = when {
@@ -102,9 +116,52 @@ fun AppTheme(
         else -> LightColorScheme
     }
 
+    SetSystemBarIconsColor(useDarkTheme = useDarkTheme)
+
+//    SetSystemBarColors(colorScheme = colorScheme)
+
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
         content = content
     )
+}
+
+@Composable
+fun SetSystemBarIconsColor(useDarkTheme: Boolean) {
+    val view = LocalView.current
+    val context = LocalContext.current
+
+    DisposableEffect(useDarkTheme) {
+        val window = (context as? android.app.Activity)?.window
+            ?: throw IllegalStateException("Not in an activity - unable to get Window reference")
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        val controller = WindowCompat.getInsetsController(window, view)
+        controller.isAppearanceLightStatusBars = useDarkTheme
+        controller.isAppearanceLightNavigationBars = useDarkTheme
+
+        onDispose {}
+    }
+}
+
+@Composable
+fun SetSystemBarColors(colorScheme: ColorScheme) {
+    val context = LocalContext.current
+
+    val statusBarColor = colorScheme.primary
+    val navigationBarColor = colorScheme.primary
+
+    DisposableEffect(statusBarColor, navigationBarColor) {
+        val window = (context as? android.app.Activity)?.window
+            ?: throw IllegalStateException("Not in an activity - unable to get Window reference")
+
+        WindowCompat.setDecorFitsSystemWindows(window, false)
+
+        window.statusBarColor = statusBarColor.toArgb()
+        window.navigationBarColor = navigationBarColor.toArgb()
+
+        onDispose {}
+    }
 }
