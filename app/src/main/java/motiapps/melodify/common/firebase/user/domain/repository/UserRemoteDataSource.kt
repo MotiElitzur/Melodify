@@ -1,4 +1,4 @@
-package motiapps.melodify.common.user.domain.source
+package motiapps.melodify.common.firebase.user.domain.repository
 
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.common.user.data.model.UserDto

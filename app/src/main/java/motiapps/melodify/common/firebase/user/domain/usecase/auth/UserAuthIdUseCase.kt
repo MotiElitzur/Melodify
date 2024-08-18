@@ -1,8 +1,8 @@
-package motiapps.melodify.common.user.domain.usecases.auth
+package motiapps.melodify.common.firebase.user.domain.usecase.auth
 
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
-import motiapps.melodify.common.user.domain.repository.AuthRepository
+import motiapps.melodify.common.firebase.user.domain.repository.AuthRepository
 import javax.inject.Inject
 
 class UserAuthIdUseCase @Inject constructor(

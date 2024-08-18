@@ -4,7 +4,7 @@ import motiapps.melodify.common.user.data.source.local.UserDao
 import motiapps.melodify.common.user.data.model.User
 import motiapps.melodify.common.user.data.model.toDto
 import motiapps.melodify.common.user.data.model.update
-import motiapps.melodify.common.user.domain.source.UserRemoteDataSource
+import motiapps.melodify.common.firebase.user.domain.repository.UserRemoteDataSource
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.common.user.data.model.toUser
 import motiapps.melodify.common.user.domain.repository.UserRepository

@@ -1,4 +1,4 @@
-package motiapps.melodify.common.user.domain.repository
+package motiapps.melodify.common.firebase.user.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
 import motiapps.melodify.core.domain.base.Resource

@@ -2,7 +2,7 @@ package motiapps.melodify.features.splash
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import motiapps.melodify.common.user.domain.usecases.auth.UserLoggedInUseCase
+import motiapps.melodify.common.firebase.user.domain.usecase.auth.UserLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import motiapps.melodify.core.domain.base.Resource

@@ -1,21 +1,21 @@
-package motiapps.melodify.common.user.data.source.remote
+package motiapps.melodify.common.firebase.user.data
 
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
+import motiapps.melodify.common.firebase.domain.FirestoreProvider
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.common.user.data.model.UserDto
-import motiapps.melodify.common.user.domain.source.UserRemoteDataSource
+import motiapps.melodify.common.firebase.user.domain.repository.UserRemoteDataSource
 import javax.inject.Inject
 
 class UserRemoteDataSourceImpl @Inject constructor(
     private val firebaseAuth: FirebaseAuth,
-    private val firestore: FirebaseFirestore
+    private val firestoreProvider: FirestoreProvider
 ) : UserRemoteDataSource {
 
     override suspend fun getUserById(userId: String): Resource<UserDto> {
         return try {
-            val document = firestore.collection("users").document(userId).get().await()
+            val document = firestoreProvider.getUserReference(userId).get().await()
             val user = document.toObject(UserDto::class.java)
             if (user != null) {
                 Resource.Success(user)
@@ -37,7 +37,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun insertUser(userId: String, user: UserDto): Resource<Unit> {
         return try {
-            firestore.collection("users").document(userId).set(user).await()
+            firestoreProvider.getUserReference(userId).set(user).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e)
@@ -46,7 +46,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun updateUser(userId: String, dataToUpdate: Map<String, Any>): Resource<Unit> {
         return try {
-            firestore.collection("users").document(userId).update(dataToUpdate).await()
+            firestoreProvider.getUserReference(userId).update(dataToUpdate).await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e)
@@ -55,7 +55,7 @@ class UserRemoteDataSourceImpl @Inject constructor(
 
     override suspend fun deleteUser(userId: String): Resource<Unit> {
         return try {
-            firestore.collection("users").document(userId).delete().await()
+            firestoreProvider.getUserReference(userId).delete().await()
             Resource.Success(Unit)
         } catch (e: Exception) {
             Resource.Error(e)
