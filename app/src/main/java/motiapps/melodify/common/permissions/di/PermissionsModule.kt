@@ -10,15 +10,6 @@ import motiapps.melodify.common.permissions.domain.repository.PermissionReposito
 import motiapps.melodify.common.permissions.data.PermissionRepositoryImpl
 import javax.inject.Inject
 
-@ActivityRetainedScoped
-class PermissionRepositoryFactory @Inject constructor(
-    private val preferencesUseCases: PreferencesUseCases
-) {
-    fun create(activityContextProvider: ActivityContextProvider): PermissionRepository {
-        return PermissionRepositoryImpl(activityContextProvider, preferencesUseCases)
-    }
-}
-
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object PermissionModule {
@@ -29,5 +20,14 @@ object PermissionModule {
         activityContextProvider: ActivityContextProvider
     ): PermissionRepository {
         return factory.create(activityContextProvider)
+    }
+}
+
+@ActivityRetainedScoped
+class PermissionRepositoryFactory @Inject constructor(
+    private val preferencesUseCases: PreferencesUseCases
+) {
+    fun create(activityContextProvider: ActivityContextProvider): PermissionRepository {
+        return PermissionRepositoryImpl(activityContextProvider, preferencesUseCases)
     }
 }

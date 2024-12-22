@@ -1,5 +1,6 @@
 package motiapps.melodify.core.presentation
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,6 +16,9 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.MainScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import motiapps.melodify.common.permissions.di.ActivityContextProvider
 import javax.inject.Inject
 
@@ -54,5 +58,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+
     }
 }

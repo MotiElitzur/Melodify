@@ -21,7 +21,7 @@ class ActivityContextProvider @Inject constructor() : DefaultLifecycleObserver {
 
     override fun onCreate(owner: LifecycleOwner) {
         activityRef.set(owner as? ComponentActivity)
-        println("ActivityContextProvider: onCreate")
+        println("ActivityContextProvider: onCreate this = $this")
 
         activityRef.get()?.let { activity ->
             requestPermissionLauncher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -33,10 +33,10 @@ class ActivityContextProvider @Inject constructor() : DefaultLifecycleObserver {
     }
 
     override fun onDestroy(owner: LifecycleOwner) {
-        activityRef.set(null)
-        requestPermissionLauncher = null
-        permissionResultCallback = null
-        println("ActivityContextProvider: onDestroy")
+//        activityRef.set(null)
+//        requestPermissionLauncher = null
+//        permissionResultCallback = null
+        println("ActivityContextProvider: onDestroy, this = $this")
     }
 
     fun requestPermission(permission: String, callback: PermissionResultCallback) {
