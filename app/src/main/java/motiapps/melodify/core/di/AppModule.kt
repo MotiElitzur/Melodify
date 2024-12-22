@@ -17,6 +17,12 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun provideContext(@ApplicationContext app: Context): Context {
+        return app.applicationContext
+    }
+
+    @Provides
+    @Singleton
     fun provideApplication(@ApplicationContext app: Context): App {
         return app as App
     }

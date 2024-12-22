@@ -71,14 +71,14 @@ android {
 
 dependencies {
 
+    // Kotlin
     implementation(libs.kotlin.reflection)
-
-    val composeBom = platform(libs.compose.bom)
-    implementation(composeBom)
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.core.splashscreen)
+    implementation(libs.androidx.appcompat)
+    implementation(libs.androidx.work.runtime.ktx)
 
     // Hilt
     implementation(libs.hilt.android)
@@ -98,6 +98,9 @@ dependencies {
     implementation(libs.datastore.preferences)
 
     // Compose
+    val composeBom = platform(libs.compose.bom)
+    implementation(composeBom)
+
     implementation(libs.compose.ui)
     implementation(libs.compose.ui.tooling.preview)
     implementation(libs.compose.material3)
