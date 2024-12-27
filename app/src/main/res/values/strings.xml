@@ -1,4 +1,7 @@
 <resources>
-    <string name="app_name">Melodify</string>
-    <string name="change_language">Change Language</string>
+    <string name="app_name" translatable="false">Melodify</string>
+    <string name="change_language" translatable="false">Change Language</string>
+    <string name="current_language_label" translatable="false">Current Language: %1$s</string>
+    <string name="switch_to_spanish" translatable="false">Switch to Spanish</string>
+    <string name="switch_to_english" translatable="false">Switch to English</string>
 </resources>

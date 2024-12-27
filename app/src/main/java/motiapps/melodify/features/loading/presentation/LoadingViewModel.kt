@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import motiapps.melodify.common.Logger
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.common.user.domain.model.UserPartialUpdate
 import motiapps.melodify.common.user.domain.usecases.UserUseCases
@@ -65,6 +66,6 @@ class LoadingViewModel @Inject constructor(
     override fun createInitialState(): LoadingState = LoadingState()
 
     override fun triggerEvent(event: LoadingEvent) {
-        println("event: $event, state: $state")
+        Logger.log("event: $event, state: $state")
     }
 }

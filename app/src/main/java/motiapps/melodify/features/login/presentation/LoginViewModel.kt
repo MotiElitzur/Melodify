@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import motiapps.melodify.common.Logger
 import motiapps.melodify.common.Utils
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.features.login.domain.usecase.LoginUseCases
@@ -24,7 +25,7 @@ class LoginViewModel @Inject constructor(
     override fun createInitialState(): LoginState = LoginState()
 
     override fun triggerEvent(event: LoginEvent) {
-        println("LoginViewModel.triggerEvent $event , email: ${state.email} , password: ${state.password}")
+        Logger.log("LoginViewModel.triggerEvent $event , email: ${state.email} , password: ${state.password}")
         viewModelScope.launch {
             when (event) {
                 is LoginEvent.EmailChanged -> updateEmail(event.email)

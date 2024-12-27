@@ -1,18 +1,19 @@
 package motiapps.melodify.core.domain.base
 
+import motiapps.melodify.common.Logger
 import motiapps.melodify.core.presentation.base.error.BaseErrorType
 
 sealed class Resource<out T> {
 
     class Success<out T>(val data: T, val nonFatalErrorType: BaseErrorType? = null) : Resource<T>() {
         init {
-            println("Success: $data")
+            Logger.log("Success: $data")
         }
     }
     class Error(val exception: Throwable, val errorType: BaseErrorType = BaseErrorType.Unknown) : Resource<Nothing>() {
 
         init {
-            println("Error: ${exception.message}, errorType: $errorType, exception: $exception")
+            Logger.log("Error: ${exception.message}, errorType: $errorType, exception: $exception")
         }
     }
 }

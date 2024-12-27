@@ -4,6 +4,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import motiapps.melodify.common.Logger
 import motiapps.melodify.common.datastore.data.model.PreferenceObject
 import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.core.domain.base.Resource
@@ -25,7 +26,7 @@ class ThemeViewModel @Inject constructor(
     override fun triggerEvent(event: ThemeEvent) {
         when (event) {
             is ThemeEvent.ThemeDarkModeChanged -> {
-                println("ThemeViewModel.triggerEvent $event")
+                Logger.log("ThemeViewModel.triggerEvent $event")
             }
         }
     }

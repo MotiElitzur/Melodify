@@ -6,6 +6,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.lifecycle.DefaultLifecycleObserver
 import androidx.lifecycle.LifecycleOwner
 import dagger.hilt.android.scopes.ActivityRetainedScoped
+import motiapps.melodify.common.Logger
 import javax.inject.Inject
 import java.util.concurrent.atomic.AtomicReference
 
@@ -21,7 +22,7 @@ class ActivityContextProvider @Inject constructor() : DefaultLifecycleObserver {
 
     override fun onCreate(owner: LifecycleOwner) {
         activityRef.set(owner as? ComponentActivity)
-        println("ActivityContextProvider: onCreate this = $this")
+        Logger.log("ActivityContextProvider: onCreate this = $this")
 
         activityRef.get()?.let { activity ->
             requestPermissionLauncher = activity.registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
@@ -36,13 +37,13 @@ class ActivityContextProvider @Inject constructor() : DefaultLifecycleObserver {
 //        activityRef.set(null)
 //        requestPermissionLauncher = null
 //        permissionResultCallback = null
-        println("ActivityContextProvider: onDestroy, this = $this")
+        Logger.log("ActivityContextProvider: onDestroy, this = $this")
     }
 
     fun requestPermission(permission: String, callback: PermissionResultCallback) {
         permissionResultCallback = callback
         currentPermission = permission
-        requestPermissionLauncher?.launch(permission) ?: println("RequestPermissionLauncher is null")
+        requestPermissionLauncher?.launch(permission) ?: Logger.log("RequestPermissionLauncher is null")
     }
 }
 interface PermissionResultCallback {
