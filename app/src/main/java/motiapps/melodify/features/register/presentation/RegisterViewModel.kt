@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import motiapps.melodify.common.Logger
 import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.base.error.ErrorHandler.Companion.getErrorMessage
@@ -26,7 +27,7 @@ class RegisterViewModel @Inject constructor(
 
     override fun triggerEvent(event: RegisterEvent) {
         viewModelScope.launch {
-            println("event: $event, state: $state")
+            Logger.log("event: $event, state: $state")
             when (event) {
                 is RegisterEvent.UpdateField -> updateField(event.field, event.value)
                 is RegisterEvent.ValidateField -> validateField(event.field)

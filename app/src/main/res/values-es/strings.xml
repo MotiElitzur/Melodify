@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Melodify</string>
+    <string name="change_language">Cambiar Idioma</string>
+    <string name="current_language_label">Idioma actual: %1$s</string>
+    <string name="switch_to_spanish">Cambiar a español</string>
+    <string name="switch_to_english">Cambiar a inglés</string>
+</resources>

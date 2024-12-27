@@ -8,11 +8,13 @@ import android.media.AudioAttributes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import motiapps.melodify.R
+import motiapps.melodify.common.Logger
 import motiapps.melodify.common.notifications.data.model.channel.NotificationChannel
 import motiapps.melodify.common.notifications.data.model.Notification
 import motiapps.melodify.common.notifications.data.model.NotificationType
 import motiapps.melodify.common.notifications.data.model.action.NotificationActionType
 import motiapps.melodify.common.notifications.domain.repository.NotificationRepository
+import motiapps.melodify.core.domain.base.Resource
 import motiapps.melodify.core.presentation.MainActivity
 import javax.inject.Inject
 
@@ -23,7 +25,7 @@ class NotificationRepositoryImpl @Inject constructor(
     // region NotificationRepository
 
     @SuppressLint("MissingPermission")
-    override fun showNotification(notification: Notification): Result<Unit> {
+    override fun showNotification(notification: Notification): Resource<Unit> {
         return try {
             createNotificationChannel(notification.notificationChannel)
             val notificationBuilder = createNotificationBuilder(notification)
@@ -31,18 +33,18 @@ class NotificationRepositoryImpl @Inject constructor(
             with(NotificationManagerCompat.from(context)) {
                 notify(notification.type.notificationId, notificationBuilder.build())
             }
-            Result.success(Unit)
+            Resource.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            Resource.Error(e)
         }
     }
 
-    override fun cancelNotification(notificationId: Int): Result<Unit> {
+    override fun cancelNotification(notificationId: Int): Resource<Unit> {
         return try {
             NotificationManagerCompat.from(context).cancel(notificationId)
-            Result.success(Unit)
+            Resource.Success(Unit)
         } catch (e: Exception) {
-            Result.failure(e)
+            Resource.Error(e)
         }
     }
 
@@ -154,12 +156,12 @@ class NotificationRepositoryImpl @Inject constructor(
 
             // Add notification type, we enter the data not like receiver because we want to catch the action first.
             putExtra(notificationType::class.simpleName, actionType.name)
-            println("NotificationRepositoryImpl.getBroadcastIntent() notificationType::class.simpleName=${notificationType::class.simpleName} actionType.name=${actionType.name}")
+            Logger.log("NotificationRepositoryImpl.getBroadcastIntent() notificationType::class.simpleName=${notificationType::class.simpleName} actionType.name=${actionType.name}")
 
             // Add button pressed name if exist.
             if (buttonName != null) {
                 putExtra(actionType.name, buttonName)
-                println("NotificationRepositoryImpl.getBroadcastIntent() actionType.name=${actionType.name} buttonName=$buttonName")
+                Logger.log("NotificationRepositoryImpl.getBroadcastIntent() actionType.name=${actionType.name} buttonName=$buttonName")
             }
         }
 

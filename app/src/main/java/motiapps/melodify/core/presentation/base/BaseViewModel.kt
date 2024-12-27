@@ -2,6 +2,7 @@ package motiapps.melodify.core.presentation.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
+import motiapps.melodify.common.Logger
 
 abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewModel() {
 
@@ -20,7 +21,7 @@ abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewMode
     protected fun setState(reduce: State.() -> State) {
         // Use the update method to avoid race conditions.
         _uiState.update { currentState -> currentState.reduce() }
-        println("$state")
+        Logger.log("$state")
     }
 
     // endregion
