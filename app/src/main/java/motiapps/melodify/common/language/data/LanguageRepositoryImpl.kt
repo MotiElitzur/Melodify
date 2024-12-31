@@ -6,13 +6,16 @@ import androidx.core.os.LocaleListCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import motiapps.melodify.common.datastore.data.model.PreferenceObject
+import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.language.domain.repository.LanguageRepository
 import motiapps.melodify.core.domain.base.Resource
 import java.util.Locale
 import javax.inject.Inject
 
 class LanguageRepositoryImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    val preferencesUseCases: PreferencesUseCases
 ) : LanguageRepository {
 
     override suspend fun setAppLanguage(languageTag: String): Resource<Unit> {
@@ -30,6 +33,9 @@ class LanguageRepositoryImpl @Inject constructor(
                 // For Android 13 and above
                 val localeList = LocaleListCompat.forLanguageTags(languageTag)
                 AppCompatDelegate.setApplicationLocales(localeList)
+
+                // Save the language to preferences
+                preferencesUseCases.setPreferenceUseCase(PreferenceObject("appLanguage", languageTag))
             }
             Resource.Success(Unit)
         } catch (e: Exception) {

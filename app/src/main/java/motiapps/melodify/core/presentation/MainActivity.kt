@@ -1,6 +1,5 @@
 package motiapps.melodify.core.presentation
 
-import android.content.Context
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -19,11 +18,8 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.MainScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import motiapps.melodify.common.Logger
-import motiapps.melodify.common.permissions.di.ActivityContextProvider
+import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
 import java.util.Locale
 import javax.inject.Inject
 
