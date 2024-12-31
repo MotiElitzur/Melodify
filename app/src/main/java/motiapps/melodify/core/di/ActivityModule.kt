@@ -5,7 +5,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
-import motiapps.melodify.common.permissions.di.ActivityContextProvider
+import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)

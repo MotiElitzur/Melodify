@@ -6,28 +6,29 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import dagger.hilt.android.scopes.ActivityRetainedScoped
 import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
+import motiapps.melodify.common.permissions.data.PermissionManager
 import motiapps.melodify.common.permissions.domain.repository.PermissionRepository
 import motiapps.melodify.common.permissions.data.PermissionRepositoryImpl
-import javax.inject.Inject
+import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object PermissionModule {
+
+    @Provides
+    @ActivityRetainedScoped
+    fun providePermissionManager(
+        activityContextProvider: ActivityContextProvider
+    ): PermissionManager {
+        return PermissionManager(activityContextProvider)
+    }
+
     @Provides
     @ActivityRetainedScoped
     fun providePermissionRepository(
-        factory: PermissionRepositoryFactory,
-        activityContextProvider: ActivityContextProvider
+        permissionManager: PermissionManager,
+        preferencesUseCases: PreferencesUseCases
     ): PermissionRepository {
-        return factory.create(activityContextProvider)
-    }
-}
-
-@ActivityRetainedScoped
-class PermissionRepositoryFactory @Inject constructor(
-    private val preferencesUseCases: PreferencesUseCases
-) {
-    fun create(activityContextProvider: ActivityContextProvider): PermissionRepository {
-        return PermissionRepositoryImpl(activityContextProvider, preferencesUseCases)
+        return PermissionRepositoryImpl(permissionManager, preferencesUseCases)
     }
 }

@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
@@ -39,36 +40,30 @@ fun HomeScreen(
     viewModel: HomeViewModel,
     navController: NavController
 ) {
-    val currentLanguage by viewModel.currentLanguage
+    val currentLanguage by viewModel.currentLanguage.collectAsState()
     val context = LocalContext.current
 
-    // Log the current language at the start of composition
-    Logger.d("HomeScreen", "Current language at start: $currentLanguage")
-
-    // Create a localized context dynamically based on current language
+    // Wrap the context with the updated configuration
     val localizedContext = remember(currentLanguage) {
         context.createConfigurationContext(Configuration(context.resources.configuration).apply {
             setLocale(Locale(currentLanguage))
         })
     }
 
-    // Fetch strings using the localized context
-    val currentLanguageText = remember(localizedContext) {
-        localizedContext.resources.getString(
-            R.string.current_language_label,
-            currentLanguage
-        )
-    }.also {
-        Logger.d("HomeScreen", "Localized string for current language: $it")
+    // Fetch localized strings using the wrapped context
+    val updatedLanguageText = localizedContext.resources.getString(
+        R.string.current_language_label,
+        currentLanguage
+    )
+    val buttonText = if (currentLanguage == "en") {
+        localizedContext.resources.getString(R.string.switch_to_spanish)
+    } else {
+        localizedContext.resources.getString(R.string.switch_to_english)
     }
 
-    val buttonText = remember(localizedContext) {
-        localizedContext.resources.getString(
-            if (currentLanguage == "en") R.string.switch_to_spanish else R.string.switch_to_english
-        )
-    }.also {
-        Logger.d("HomeScreen", "Localized string for button: $it")
-    }
+    // Log the current strings
+    Logger.d("HomeScreen", "Updated Language Text: $updatedLanguageText")
+    Logger.d("HomeScreen", "Button Text: $buttonText")
 
     Column(
         modifier = Modifier
@@ -77,8 +72,9 @@ fun HomeScreen(
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        // Display updated language text
         Text(
-            text = currentLanguageText,
+            text = updatedLanguageText,
             style = MaterialTheme.typography.bodyLarge
         )
 

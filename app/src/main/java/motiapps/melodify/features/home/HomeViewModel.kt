@@ -22,19 +22,22 @@ import javax.inject.Inject
 import androidx.compose.runtime.State
 import androidx.compose.ui.platform.LocalContext
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import motiapps.melodify.R
+import motiapps.melodify.common.language.domain.usecase.LanguageUseCases
 
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    private val pref: PreferencesUseCases,
+    private val languageUseCases: LanguageUseCases,
     private val permissionUseCases: PermissionsUseCases,
-    private val getLanguageUseCase: GetLanguageUseCase,
-    private val changeLanguageUseCase: ChangeLanguageUseCase,
-    private val showNotificationUseCase: ShowNotificationUseCase
 ) : ViewModel() {
 
-    private val _currentLanguage = mutableStateOf("")
-    val currentLanguage: State<String> = _currentLanguage
+    // Expose current language as a StateFlow
+    private val _currentLanguage = MutableStateFlow("")
+    val currentLanguage: StateFlow<String> = _currentLanguage.asStateFlow()
 
     init {
         fetchCurrentLanguage()
@@ -42,7 +45,7 @@ class HomeViewModel @Inject constructor(
 
     fun changeLanguage(languageTag: String) {
         viewModelScope.launch {
-            when (val result = changeLanguageUseCase(languageTag)) {
+            when (val result = languageUseCases.changeLanguageUseCase(languageTag)) {
                 is Resource.Success -> {
                     _currentLanguage.value = languageTag
                 }
@@ -55,7 +58,7 @@ class HomeViewModel @Inject constructor(
 
     private fun fetchCurrentLanguage() {
         viewModelScope.launch {
-            when (val result = getLanguageUseCase()) {
+            when (val result = languageUseCases.getLanguagesUseCase()) {
                 is Resource.Success -> {
                     _currentLanguage.value = result.data
                 }
@@ -63,6 +66,21 @@ class HomeViewModel @Inject constructor(
                     Logger.d("HomeViewModel", "Error fetching current language: ${result.exception.message}")
                 }
             }
+        }
+
+        viewModelScope.launch {
+
+            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
+                is Resource.Success -> {
+                    val value = result.data
+                    Logger.log("value = $value")
+                }
+                is Resource.Error -> {
+                    val exception = result.exception
+                    Logger.log("exception = $exception")
+                }
+            }
+
         }
 
 
@@ -135,75 +153,6 @@ class HomeViewModel @Inject constructor(
 
         }
 
-//        viewModelScope.launch {
-//
-//
-//
-//            when(val result = permissionUseCases.checkPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//
-//            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//
-//            when(val result = permissionUseCases.checkPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//
-//            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//
-//            when(val result = permissionUseCases.checkPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//
-//            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-//                is Resource.Success -> {
-//                    val value = result.data
-//                    Logger.log("value = $value")
-//                }
-//                is Resource.Error -> {
-//                    val exception = result.exception
-//                    Logger.log("exception = $exception")
-//                }
-//            }
-//        }
+
 
 }

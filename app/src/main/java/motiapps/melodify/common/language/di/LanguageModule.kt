@@ -6,6 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.language.data.LanguageRepositoryImpl
 import motiapps.melodify.common.language.domain.usecase.ChangeLanguageUseCase
 import motiapps.melodify.common.language.domain.usecase.GetLanguageUseCase
@@ -20,8 +21,9 @@ object LanguageModule {
 
     @Provides
     fun provideLanguageRepository(
-        @ApplicationContext context: Context
-    ): LanguageRepository = LanguageRepositoryImpl(context)
+        @ApplicationContext context: Context,
+        preferencesUseCases: PreferencesUseCases
+    ): LanguageRepository = LanguageRepositoryImpl(context, preferencesUseCases)
 
     @Provides
     fun provideChangeLanguageUseCase(repository: LanguageRepository): ChangeLanguageUseCase {
