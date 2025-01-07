@@ -70,7 +70,7 @@ class HomeViewModel @Inject constructor(
 
         viewModelScope.launch {
 
-            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
+            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.BLUETOOTH_CONNECT)) {
                 is Resource.Success -> {
                     val value = result.data
                     Logger.log("value = $value")

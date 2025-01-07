@@ -17,10 +17,8 @@ object PermissionModule {
 
     @Provides
     @ActivityRetainedScoped
-    fun providePermissionManager(
-        activityContextProvider: ActivityContextProvider
-    ): PermissionManager {
-        return PermissionManager(activityContextProvider)
+    fun providePermissionManager(): PermissionManager {
+        return PermissionManager()
     }
 
     @Provides
