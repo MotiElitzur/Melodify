@@ -22,7 +22,7 @@ class PermissionRepositoryImpl @Inject constructor(
 ) : PermissionRepository {
 
     override suspend fun checkPermission(permission: String): PermissionResult {
-        val activity = permissionManager.activityContextProvider.activity
+        val activity = permissionManager.activity ?: throw IllegalStateException("Activity is not available")
         return when {
             ContextCompat.checkSelfPermission(activity, permission) == PackageManager.PERMISSION_GRANTED -> {
                 PermissionResult.Granted
@@ -52,7 +52,7 @@ class PermissionRepositoryImpl @Inject constructor(
                     if (isGranted) {
                         cont.resume(PermissionResult.Granted)
                     } else {
-                        val activity = permissionManager.activityContextProvider.activity
+                        val activity = permissionManager.activity ?: throw IllegalStateException("Activity is not available")
                         if (ActivityCompat.shouldShowRequestPermissionRationale(activity, permission)) {
                             cont.resume(PermissionResult.Denied)
                         } else {
