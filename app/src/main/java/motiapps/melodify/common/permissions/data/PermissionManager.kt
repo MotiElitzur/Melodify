@@ -15,7 +15,8 @@ class PermissionManager @Inject constructor() : ActivityContextProvider.Lifecycl
 
     var activity: ComponentActivity? = null
     private var permissionLauncher: ActivityResultLauncher<String>? = null
-    private var pendingPermissionRequest: Pair<String, PermissionResultCallback>? = null
+    private var permissionResultCallback: PermissionResultCallback? = null
+    private var currentPermission: String? = null
 
     override fun onCreate(activity: ComponentActivity) {
         Logger.log("PermissionManager: onCreate called with activity: ${activity.localClassName}")
@@ -25,19 +26,14 @@ class PermissionManager @Inject constructor() : ActivityContextProvider.Lifecycl
         permissionLauncher = activity.registerForActivityResult(
             ActivityResultContracts.RequestPermission()
         ) { isGranted ->
-            Logger.log("PermissionManager: Permission result received: ${pendingPermissionRequest?.first}, granted: $isGranted")
-            pendingPermissionRequest?.second?.onPermissionResult(
-                pendingPermissionRequest?.first ?: "",
-                isGranted
-            )
-            clearPendingPermissionRequest()
+            Logger.log("PermissionManager: Permission $currentPermission result received: $isGranted")
+            permissionResultCallback?.onPermissionResult(currentPermission ?: "", isGranted)
         }
+    }
 
-        // Handle any pending permission requests
-        pendingPermissionRequest?.let { (permission, callback) ->
-            Logger.log("PermissionManager: Handling pending permission request: $permission")
-            requestPermission(permission, callback)
-        }
+    override fun onResume(activity: ComponentActivity?) {
+        Logger.log("PermissionManager: onResume called with activity: ${activity?.localClassName}")
+        permissionResultCallback?.onActivityResumed()
     }
 
     override fun onDestroy(activity: ComponentActivity?) {
@@ -47,19 +43,8 @@ class PermissionManager @Inject constructor() : ActivityContextProvider.Lifecycl
     }
 
     fun requestPermission(permission: String, callback: PermissionResultCallback) {
-        Logger.log("PermissionManager: Requesting permission: $permission")
-        if (permissionLauncher == null) {
-            Logger.log("PermissionManager: Permission launcher is not available. Queuing permission request: $permission")
-            pendingPermissionRequest = Pair(permission, callback)
-        } else {
-            Logger.log("PermissionManager: Launching permission request: $permission")
-            permissionLauncher?.launch(permission)
-            pendingPermissionRequest = Pair(permission, callback)
-        }
-    }
-
-    private fun clearPendingPermissionRequest() {
-        Logger.log("PermissionManager: Clearing pending permission request.")
-        pendingPermissionRequest = null
+        permissionResultCallback = callback
+        currentPermission = permission
+        permissionLauncher?.launch(permission) ?: throw IllegalStateException("Permission launcher is not available")
     }
 }

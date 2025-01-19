@@ -73,6 +73,7 @@ dependencies {
 
     // Kotlin
     implementation(libs.kotlin.reflection)
+    implementation(libs.kotlinx.serialization.json)
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)
@@ -87,7 +88,6 @@ dependencies {
 
     // Navigation
     implementation(libs.navigation.compose)
-    implementation(libs.kotlinx.serialization.json)
 
     // Room
     implementation(libs.room.runtime)

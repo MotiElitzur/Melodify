@@ -50,7 +50,4 @@ sealed class NotificationAction {
                 .firstOrNull { it.buttonNameId == notificationId }
         }
     }
-
-
-
 }

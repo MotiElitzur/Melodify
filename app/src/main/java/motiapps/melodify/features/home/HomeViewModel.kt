@@ -33,6 +33,7 @@ import motiapps.melodify.common.language.domain.usecase.LanguageUseCases
 class HomeViewModel @Inject constructor(
     private val languageUseCases: LanguageUseCases,
     private val permissionUseCases: PermissionsUseCases,
+    private val showNotificationUseCase: ShowNotificationUseCase
 ) : ViewModel() {
 
     // Expose current language as a StateFlow
@@ -41,6 +42,23 @@ class HomeViewModel @Inject constructor(
 
     init {
         fetchCurrentLanguage()
+    }
+
+    private fun fetchCurrentLanguage() {
+        viewModelScope.launch {
+            when (val result = languageUseCases.getLanguagesUseCase()) {
+                is Resource.Success -> {
+                    _currentLanguage.value = result.data
+                }
+
+                is Resource.Error -> {
+                    Logger.d(
+                        "HomeViewModel",
+                        "Error fetching current language: ${result.exception.message}"
+                    )
+                }
+            }
+        }
     }
 
     fun changeLanguage(languageTag: String) {
@@ -56,25 +74,17 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    private fun fetchCurrentLanguage() {
-        viewModelScope.launch {
-            when (val result = languageUseCases.getLanguagesUseCase()) {
-                is Resource.Success -> {
-                    _currentLanguage.value = result.data
-                }
-                is Resource.Error -> {
-                    Logger.d("HomeViewModel", "Error fetching current language: ${result.exception.message}")
-                }
-            }
-        }
+    fun askForPermissions() {
 
         viewModelScope.launch {
 
-            when(val result = permissionUseCases.requestPermissionUseCase(android.Manifest.permission.BLUETOOTH_CONNECT)) {
+            when (val result =
+                permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
                 is Resource.Success -> {
                     val value = result.data
                     Logger.log("value = $value")
                 }
+
                 is Resource.Error -> {
                     val exception = result.exception
                     Logger.log("exception = $exception")
@@ -82,77 +92,31 @@ class HomeViewModel @Inject constructor(
             }
 
         }
+    }
 
+    fun showNotification() {
+        viewModelScope.launch {
+            showNotificationUseCase(
+                Notification(
+                    notificationDetails = NotificationDetails(
+                        title = "Title",
+                        message = "Message",
+                        soundUri = null,
+                    )
+                )
+            ).let {
+                when (it) {
+                    is Resource.Success -> {
+                        val value = it.data
+                        Logger.log("value = $value")
+                    }
 
-//            showNotificationUseCase(
-//                Notification(
-//                    notificationDetails = NotificationDetails(
-//                        title = "Title",
-//                        message = "Message",
-//                        soundUri = null,
-//                    ),
-//                    notificationAction = listOf(
-//                        NotificationAction.MarkAsRead(
-//                            buttonNameId = "MarkAsRead",
-//                            iconResId = 0,
-//                            title = "Mark as read",
-//                            isOpenActivity = false,
-//                        )
-//                    )
-//                )
-//            ).let {
-//                when (it) {
-//                    is Resource.Success -> {
-//                        val value = it.data
-//                        Logger.log("value = $value")
-//                    }
-//
-//                    is Resource.Error -> {
-//                        val exception = it.exception
-//                        Logger.log("exception = $exception")
-//                    }
-//                }
-//            }
-
-
-//            pref.observePreferenceUseCase(PreferenceObject("key", "default value")).onEach {
-//                when (it) {
-//                    is Resource.Success -> {
-//                        val value = it.data
-//                        Logger.log("observe value = $value")
-//                    }
-//
-//                    is Resource.Error -> {
-//                        val exception = it.exception
-//                        Logger.log("observe exception = $exception")
-//                    }
-//                }
-//            }.launchIn(viewModelScope)
-//
-//
-//            var isDarkMode = false
-
-//            while (true) {
-//                pref.setPreferenceUseCase(PreferenceObject("isDarkMode", isDarkMode)).let {
-//                    when (it) {
-//                        is Resource.Success -> {
-//                            val value = it.data
-//                            Logger.log("value = $value")
-//                        }
-//
-//                        is Resource.Error -> {
-//                            val exception = it.exception
-//                            Logger.log("exception = $exception")
-//                        }
-//                    }
-//                }
-//
-//                isDarkMode = !isDarkMode
-//                kotlinx.coroutines.delay(1000)
-//            }
-
+                    is Resource.Error -> {
+                        val exception = it.exception
+                        Logger.log("exception = $exception")
+                    }
+                }
+            }
         }
-
-
-
+    }
 }

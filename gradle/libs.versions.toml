@@ -1,6 +1,8 @@
 [versions]
 kotlin = "2.1.0"
-gradlePlugin = "8.7.3" # The gradle version itself handled in the gradle-wrapper.properties, currently 8.9
+serialization = "1.8.0"
+
+gradlePlugin = "8.8.0" # The gradle version itself handled in the gradle-wrapper.properties, currently 8.12
 ksp = "2.1.0-1.0.29"
 
 androidxCore = "1.15.0"
@@ -9,21 +11,20 @@ appcompat = "1.7.0"
 
 composeBom = "2024.12.01"
 composeNavigation = "2.8.5"
-serialization = "1.7.1"
 
 firebaseBom = "33.7.0"
 googleServices = "4.4.2"
 
 datastorePreferences = "1.1.1"
 room = "2.6.1"
-hilt = "2.53.1"
+hilt = "2.55"
 hiltNavigation = "1.2.0"
 
-androidxTest = "1.6.1"
+androidxTest = "1.6.2"
 androidxTestExt = "1.2.1"
 junit = "4.13.2"
-junitJupiter = "5.8.1"
-coroutinesTest = "1.8.1"
+junitJupiter = "5.11.4"
+coroutinesTest = "1.10.1"
 truth = "1.4.4"
 workRuntimeKtx = "2.10.0"
 

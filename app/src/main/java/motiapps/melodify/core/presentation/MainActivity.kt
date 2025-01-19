@@ -66,7 +66,6 @@ class MainActivity : ComponentActivity() {
 
     }
 
-
     fun updateLocale(languageTag: String) {
         // write change app language code here
         val config = resources.configuration
@@ -86,7 +85,6 @@ class MainActivity : ComponentActivity() {
         // Finish and start the activity to refresh the app.
         finish()
         startActivity(intent)
-
     }
 
 }

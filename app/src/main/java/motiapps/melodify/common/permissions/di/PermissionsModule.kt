@@ -9,17 +9,10 @@ import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.permissions.data.PermissionManager
 import motiapps.melodify.common.permissions.domain.repository.PermissionRepository
 import motiapps.melodify.common.permissions.data.PermissionRepositoryImpl
-import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object PermissionModule {
-
-    @Provides
-    @ActivityRetainedScoped
-    fun providePermissionManager(): PermissionManager {
-        return PermissionManager()
-    }
 
     @Provides
     @ActivityRetainedScoped
@@ -28,5 +21,11 @@ object PermissionModule {
         preferencesUseCases: PreferencesUseCases
     ): PermissionRepository {
         return PermissionRepositoryImpl(permissionManager, preferencesUseCases)
+    }
+
+    @Provides
+    @ActivityRetainedScoped
+    fun providePermissionManager(): PermissionManager {
+        return PermissionManager()
     }
 }

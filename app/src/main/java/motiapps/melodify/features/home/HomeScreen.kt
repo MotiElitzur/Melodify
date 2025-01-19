@@ -61,10 +61,6 @@ fun HomeScreen(
         localizedContext.resources.getString(R.string.switch_to_english)
     }
 
-    // Log the current strings
-    Logger.d("HomeScreen", "Updated Language Text: $updatedLanguageText")
-    Logger.d("HomeScreen", "Button Text: $buttonText")
-
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -88,6 +84,28 @@ fun HomeScreen(
             }
         ) {
             Text(text = buttonText)
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+        Button(
+            onClick = {
+                viewModel.askForPermissions()
+            }
+        ) {
+            Text(text = "Ask for permissions")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+
+        Button(
+            onClick = {
+                viewModel.showNotification()
+            }
+        ) {
+            Text(text = "Show Notification")
         }
     }
 }

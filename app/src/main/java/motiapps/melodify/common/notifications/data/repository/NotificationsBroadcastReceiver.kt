@@ -22,6 +22,7 @@ class NotificationsBroadcastReceiver: BroadcastReceiver() {
         if (buttonNameId != null) {
 
             val notificationAction: NotificationAction = NotificationAction.fromName(buttonNameId)
+
             Logger.log("notificationAction: $notificationAction")
 
             Logger.log("NotificationsBroadcastReceiver onReceive notification type: $notificationTypeName, action type: $actionTypeName, button name id: $buttonNameId, extras: ${intent?.extras?.keySet()?.map { it to (intent?.extras?.getString(it) ?: "null")}}")
