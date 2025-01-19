@@ -9,16 +9,11 @@ import dagger.hilt.components.SingletonComponent
 import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.language.data.LanguageManager
 import motiapps.melodify.common.language.data.LanguageRepositoryImpl
-import motiapps.melodify.common.language.domain.usecase.ChangeLanguageUseCase
-import motiapps.melodify.common.language.domain.usecase.GetLanguageUseCase
 import motiapps.melodify.common.language.domain.repository.LanguageRepository
 
 @Module
 @InstallIn(SingletonComponent::class)
 object LanguageModule {
-
-//    @Provides
-//    fun provideLanguageRepository(): LanguageRepository = LanguageRepositoryImpl()
 
     @Provides
     fun provideLanguageRepository(
@@ -27,19 +22,10 @@ object LanguageModule {
     ): LanguageRepository = LanguageRepositoryImpl(context, preferencesUseCases)
 
     @Provides
-    fun provideChangeLanguageUseCase(repository: LanguageRepository): ChangeLanguageUseCase {
-        return ChangeLanguageUseCase(repository)
-    }
-
-    @Provides
-    fun provideGetLanguageUseCase(repository: LanguageRepository): GetLanguageUseCase {
-        return GetLanguageUseCase(repository)
-    }
-
-    @Provides
     fun provideLanguageManager(
         preferencesUseCases: PreferencesUseCases
     ): LanguageManager {
         return LanguageManager(preferencesUseCases)
     }
+
 }

@@ -13,18 +13,14 @@ import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
 @InstallIn(ActivityRetainedComponent::class)
 object ActivityModule {
 
-//    @Provides
-//    @ActivityRetainedScoped
-//    fun provideActivityContextProvider(): ActivityContextProvider {
-//        return ActivityContextProvider()
-//    }
-
     @Provides
     @ActivityRetainedScoped
     fun provideActivityContextProvider(
         permissionManager: PermissionManager,
         languageManager: LanguageManager
     ): ActivityContextProvider {
-        return ActivityContextProvider(permissionManager, languageManager)
+        return ActivityContextProvider(
+            listOf(permissionManager, languageManager)
+        )
     }
 }
