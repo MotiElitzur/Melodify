@@ -102,6 +102,4 @@ Each module is designed with **Clean Architecture principles**, utilizing **View
   - **Realtime Database** configured
 
 ### Setup
-1. Clone the repository:
-   ```bash
-   git clone https://github.com/your-username/melodify.git
+1. Add your `google-services.json` file to the `app/` directory.
