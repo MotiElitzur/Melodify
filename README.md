@@ -41,7 +41,7 @@
 
 ## 🏗️ Architecture
 
-Melodify is built using **Clean Architecture**, with a clear separation of concerns into layers: **UI**, **Domain**, and **Data**. The app utilizes **MVVM (Model-View-ViewModel)** as the design pattern and incorporates **UseCases** to encapsulate business logic.
+Melodify is built using **Clean Architecture**, with a clear separation of concerns into layers: **UI**, **Domain**, and **Data**. The app utilizes **MVI (Model-View-Intent)** as the design pattern and incorporates **UseCases** to encapsulate business logic.
 
 ### Architecture Layers
 1. **UI Layer**:
@@ -58,7 +58,7 @@ Melodify is built using **Clean Architecture**, with a clear separation of conce
 
 - **Programming Language**: Kotlin
 - **UI Framework**: Jetpack Compose
-- **Architecture**: Clean Architecture with MVVM
+- **Architecture**: Clean Architecture with MVI
 - **Dependency Injection**: Hilt
 - **Asynchronous Programming**: Kotlin Coroutines & Flow
 - **Data Persistence**: Jetpack DataStore
