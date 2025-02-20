@@ -4,4 +4,10 @@
     <string name="current_language_label" translatable="false">Current Language: %1$s</string>
     <string name="switch_to_spanish" translatable="false">Switch to Spanish</string>
     <string name="switch_to_english" translatable="false">Switch to English</string>
+    <string name="welcome_user">Welcome, %1$s!</string>
+    <string name="welcome_guest">Welcome, Guest!</string>
+    <string name="ask_permissions">Ask for Permissions</string>
+    <string name="show_notification">Show Notification</string>
+    <string name="switch_to_dark_mode">Switch to Dark Mode</string>
+    <string name="switch_to_light_mode">Switch to Light Mode</string>
 </resources>

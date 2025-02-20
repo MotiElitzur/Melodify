@@ -3,5 +3,5 @@ package motiapps.melodify.common.datastore.data.model
 data class PreferenceObject<T>(
     val key: String,
     val value: T,
-    val resultCanBeNull: Boolean = false
+    val isResultCanBeNull: Boolean = false
 )

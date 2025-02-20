@@ -11,6 +11,6 @@ class ObservePreferenceUseCase @Inject constructor(
 )  {
 
     operator fun invoke(params: PreferenceObject<Any>?): Flow<Resource<Any?>> {
-        return repository.observePreference(key = params!!.key, defaultValueType = params.value, resultCanBeNull = params.resultCanBeNull)
+        return repository.observePreference(key = params!!.key, defaultValueType = params.value, resultCanBeNull = params.isResultCanBeNull)
     }
 }
