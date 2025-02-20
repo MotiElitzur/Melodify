@@ -1,3 +1,4 @@
+// settings.gradle.kts
 pluginManagement {
     repositories {
         google()
@@ -5,6 +6,7 @@ pluginManagement {
         gradlePluginPortal()
     }
 }
+
 dependencyResolutionManagement {
     repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)
     repositories {
@@ -15,4 +17,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Melodify"
 include(":app")
- 
+include(":melodify-datastore")
