@@ -1,47 +1,50 @@
 package motiapps.melodify.features.home
 
-import androidx.compose.runtime.mutableStateOf
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import motiapps.melodify.common.Logger
-import motiapps.melodify.common.datastore.data.model.PreferenceObject
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
-import motiapps.melodify.common.language.domain.usecase.ChangeLanguageUseCase
-import motiapps.melodify.common.language.domain.usecase.GetLanguageUseCase
 import motiapps.melodify.common.notifications.data.model.Notification
 import motiapps.melodify.common.notifications.data.model.NotificationDetails
-import motiapps.melodify.common.notifications.data.model.action.NotificationAction
 import motiapps.melodify.common.notifications.domain.ShowNotificationUseCase
 import motiapps.melodify.common.permissions.domain.usecase.PermissionsUseCases
 import motiapps.melodify.core.domain.base.Resource
 import javax.inject.Inject
-import androidx.compose.runtime.State
-import androidx.compose.ui.platform.LocalContext
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import motiapps.melodify.R
+import motiapps.melodify.common.datastore.data.model.PreferenceObject
+import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
+import motiapps.melodify.common.datastore.domain.usecase.SetPreferenceUseCase
 import motiapps.melodify.common.language.domain.usecase.LanguageUseCases
-
+import motiapps.melodify.common.user.domain.usecases.UserUseCases
+import motiapps.melodify.common.user.domain.usecases.user.GetUserUseCase
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
+    private val userUseCase: UserUseCases,
     private val languageUseCases: LanguageUseCases,
     private val permissionUseCases: PermissionsUseCases,
-    private val showNotificationUseCase: ShowNotificationUseCase
+    private val preferencesUseCases: PreferencesUseCases,
+    private val showNotificationUseCase: ShowNotificationUseCase,
 ) : ViewModel() {
 
-    // Expose current language as a StateFlow
     private val _currentLanguage = MutableStateFlow("")
     val currentLanguage: StateFlow<String> = _currentLanguage.asStateFlow()
 
+    private val _userName = MutableStateFlow<String?>(null)
+    val userName: StateFlow<String?> = _userName.asStateFlow()
+
+    private val _isDarkMode = MutableStateFlow(false)
+    val isDarkMode: StateFlow<Boolean> = _isDarkMode.asStateFlow()
+
     init {
         fetchCurrentLanguage()
+        fetchUserName()
+        fetchDarkModePreference()
     }
 
     private fun fetchCurrentLanguage() {
@@ -50,13 +53,70 @@ class HomeViewModel @Inject constructor(
                 is Resource.Success -> {
                     _currentLanguage.value = result.data
                 }
-
                 is Resource.Error -> {
-                    Logger.d(
-                        "HomeViewModel",
-                        "Error fetching current language: ${result.exception.message}"
-                    )
+                    Logger.d("HomeViewModel", "Error fetching current language: ${result.exception.message}")
                 }
+            }
+        }
+    }
+
+    private fun fetchUserName() {
+        viewModelScope.launch {
+
+            when (val result = userUseCase.getUserIdUseCase()) {
+                is Resource.Success -> {
+                    when (val userResult = userUseCase.getUserUseCase(result.data)) {
+                        is Resource.Success -> {
+                            _userName.value = userResult.data?.firstName
+                        }
+                        is Resource.Error -> {
+                            Logger.d("HomeViewModel", "Error fetching user name: ${userResult.exception.message}")
+                        }
+                    }
+                }
+                is Resource.Error -> {
+                    Logger.d("HomeViewModel", "Error fetching user ID: ${result.exception.message}")
+                }
+            }
+        }
+    }
+
+    private fun fetchDarkModePreference() {
+        viewModelScope.launch {
+            when (val result = preferencesUseCases.getPreferenceUseCase(PreferenceObject("isDarkMode", false))) {
+                is Resource.Success -> {
+                    _isDarkMode.value = result.data as? Boolean ?: false
+                }
+                is Resource.Error -> {
+                    Logger.d("HomeViewModel", "Error fetching dark mode preference: ${result.exception.message}")
+                }
+            }
+        }
+    }
+
+
+    fun toggleDarkMode() {
+        viewModelScope.launch {
+            val newMode = !_isDarkMode.value
+            _isDarkMode.value = newMode
+            preferencesUseCases.setPreferenceUseCase(
+                PreferenceObject(key = "isDarkMode", value = newMode)
+            )
+        }
+    }
+
+    @RequiresApi(Build.VERSION_CODES.TIRAMISU)
+    fun askForPermissions() {
+        viewModelScope.launch {
+            val permission = android.Manifest.permission.POST_NOTIFICATIONS
+            val result = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+                permissionUseCases.requestPermissionUseCase(permission)
+            } else {
+                Resource.Success(true) // Automatically allow on older Android versions
+            }
+            when (result) {
+                is Resource.Success -> Logger.log("Permission granted")
+                is Resource.Error -> Logger.log("Permission denied: ${result.exception}")
             }
         }
     }
@@ -74,47 +134,20 @@ class HomeViewModel @Inject constructor(
         }
     }
 
-    fun askForPermissions() {
-
-        viewModelScope.launch {
-
-            when (val result =
-                permissionUseCases.requestPermissionUseCase(android.Manifest.permission.POST_NOTIFICATIONS)) {
-                is Resource.Success -> {
-                    val value = result.data
-                    Logger.log("value = $value")
-                }
-
-                is Resource.Error -> {
-                    val exception = result.exception
-                    Logger.log("exception = $exception")
-                }
-            }
-
-        }
-    }
-
     fun showNotification() {
         viewModelScope.launch {
             showNotificationUseCase(
                 Notification(
                     notificationDetails = NotificationDetails(
-                        title = "Title",
-                        message = "Message",
-                        soundUri = null,
+                        title = "Test Notification",
+                        message = "This is a test notification.",
+                        soundUri = null
                     )
                 )
             ).let {
                 when (it) {
-                    is Resource.Success -> {
-                        val value = it.data
-                        Logger.log("value = $value")
-                    }
-
-                    is Resource.Error -> {
-                        val exception = it.exception
-                        Logger.log("exception = $exception")
-                    }
+                    is Resource.Success -> Logger.log("Notification displayed")
+                    is Resource.Error -> Logger.log("Failed to display notification: ${it.exception.message}")
                 }
             }
         }

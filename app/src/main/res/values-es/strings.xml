@@ -5,4 +5,10 @@
     <string name="current_language_label">Idioma actual: %1$s</string>
     <string name="switch_to_spanish">Cambiar a español</string>
     <string name="switch_to_english">Cambiar a inglés</string>
+    <string name="welcome_user">¡Bienvenido, %1$s!</string>
+    <string name="welcome_guest">¡Bienvenido, Invitado!</string>
+    <string name="ask_permissions">Solicitar Permisos</string>
+    <string name="show_notification">Mostrar Notificación</string>
+    <string name="switch_to_dark_mode">Cambiar a Modo Oscuro</string>
+    <string name="switch_to_light_mode">Cambiar a Modo Claro</string>
 </resources>

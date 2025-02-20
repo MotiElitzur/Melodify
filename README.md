@@ -1,4 +1,4 @@
-# 🎵 Melodify: Showcase App for Modern Android Development
+# Melodify: Showcase App for Modern Android Development
 
 **Melodify** is a feature-rich Android application designed to demonstrate my expertise in **Kotlin**, **Jetpack Compose**, and **modern Android development practices**. The app name combines "Modify" and "Melody," reflecting its foundation on **Compose** and its focus on creating a seamless and modular user experience.
 

@@ -33,7 +33,7 @@ class ThemeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            preferencesUseCases.observePreferenceUseCase(PreferenceObject(DARK_MODE_KEY, false, resultCanBeNull = true)).collect { darkModeStatus->
+            preferencesUseCases.observePreferenceUseCase(PreferenceObject(DARK_MODE_KEY, false, isResultCanBeNull = true)).collect { darkModeStatus->
                 setState {
                     state.copy(
                         isDarkTheme = (darkModeStatus as? Resource.Success)?.data as? Boolean
