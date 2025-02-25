@@ -1,6 +1,0 @@
-jdk:
-  - openjdk17
-
-build:
-  gradle:
-    - "./gradlew :melodify-permission:assembleRelease :melodify-permission:publishToMavenLocal --no-daemon"
