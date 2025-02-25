@@ -1,0 +1,6 @@
+jdk:
+  - openjdk11
+
+build:
+  gradle:
+    - "melodify-permission:assembleRelease"
