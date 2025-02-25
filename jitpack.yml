@@ -3,4 +3,4 @@ jdk:
 
 build:
   gradle:
-    - "cd melodify-permission && ../gradlew assembleRelease publishToMavenLocal --no-daemon"
+    - "./gradlew :melodify-permission:assembleRelease :melodify-permission:publishToMavenLocal --no-daemon"
