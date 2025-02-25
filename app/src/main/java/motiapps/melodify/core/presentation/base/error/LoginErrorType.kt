@@ -1,5 +1,7 @@
 package motiapps.melodify.core.presentation.base.error
 
+import melodify.core.domain.BaseErrorType
+
 sealed class LoginErrorType: BaseErrorType {
     data object InvalidEmail: LoginErrorType()
     data object InvalidPassword: LoginErrorType()

@@ -8,13 +8,13 @@ import android.media.AudioAttributes
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import motiapps.melodify.R
-import motiapps.melodify.common.Logger
+import melodify.core.domain.Logger
 import motiapps.melodify.common.notifications.data.model.channel.NotificationChannel
 import motiapps.melodify.common.notifications.data.model.Notification
 import motiapps.melodify.common.notifications.data.model.NotificationType
 import motiapps.melodify.common.notifications.data.model.action.NotificationActionType
 import motiapps.melodify.common.notifications.domain.repository.NotificationRepository
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.presentation.MainActivity
 import javax.inject.Inject
 

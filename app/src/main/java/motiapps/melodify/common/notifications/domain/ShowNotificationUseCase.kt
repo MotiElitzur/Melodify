@@ -1,9 +1,8 @@
 package motiapps.melodify.common.notifications.domain
 
 import motiapps.melodify.common.notifications.data.model.Notification
-import motiapps.melodify.common.notifications.data.model.NotificationDetails
 import motiapps.melodify.common.notifications.domain.repository.NotificationRepository
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import javax.inject.Inject
 

@@ -1,7 +1,7 @@
 package motiapps.melodify.common.notifications.domain.repository
 
 import motiapps.melodify.common.notifications.data.model.Notification
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 
 interface NotificationRepository {
     fun showNotification(notification: Notification): Resource<Unit>

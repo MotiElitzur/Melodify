@@ -6,7 +6,7 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
+import melodify.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.language.data.LanguageManager
 import motiapps.melodify.common.language.data.LanguageRepositoryImpl
 import motiapps.melodify.common.language.domain.repository.LanguageRepository

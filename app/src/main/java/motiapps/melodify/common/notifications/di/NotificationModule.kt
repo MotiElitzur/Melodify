@@ -5,7 +5,6 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.notifications.data.repository.NotificationRepositoryImpl
 import motiapps.melodify.common.notifications.data.repository.NotificationsBroadcastReceiver
 import motiapps.melodify.common.notifications.domain.repository.NotificationRepository

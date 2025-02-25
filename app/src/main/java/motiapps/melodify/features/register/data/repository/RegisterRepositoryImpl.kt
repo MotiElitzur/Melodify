@@ -7,10 +7,10 @@ import com.google.firebase.auth.FirebaseAuthWeakPasswordException
 import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 import motiapps.melodify.common.user.data.model.User
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.common.user.domain.usecases.UserUseCases
 import motiapps.melodify.features.register.domain.repository.RegisterRepository
-import motiapps.melodify.core.presentation.base.error.BaseErrorType
+import melodify.core.domain.BaseErrorType
 import motiapps.melodify.core.presentation.base.error.RegisterErrorType
 import javax.inject.Inject
 

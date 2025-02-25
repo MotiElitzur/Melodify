@@ -1,6 +1,6 @@
 package motiapps.melodify.features.register.domain.usecases
 
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.features.register.data.model.CreateUserInput
 import motiapps.melodify.features.register.domain.repository.RegisterRepository

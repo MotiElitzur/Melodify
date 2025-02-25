@@ -1,7 +1,7 @@
 package motiapps.melodify.common.language.domain.usecase
 
 import motiapps.melodify.common.language.domain.repository.LanguageRepository
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import javax.inject.Inject
 

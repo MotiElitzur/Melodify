@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.Timestamp
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.Logger
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Logger
+import melodify.core.domain.Resource
 import motiapps.melodify.common.user.domain.model.UserPartialUpdate
 import motiapps.melodify.common.user.domain.usecases.UserUseCases
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
@@ -33,13 +33,15 @@ class LoadingViewModel @Inject constructor(
         when (val userIdResult = userUseCases.getUserIdUseCase()) {
             is Resource.Success -> handleUserIdSuccess(userIdResult.data)
             is Resource.Error -> handleError(userIdResult.errorType.getErrorMessage())
-        }
+            is Resource.Loading -> setState { state.copy(isLoading = true)}
+            }
     }
 
     private suspend fun handleUserIdSuccess(userId: String) {
         when (val userLoadingResult = loadingUserUseCase(LoadingValues(userId = userId))) {
             is Resource.Success -> handleLoadingUserSuccess(userId)
             is Resource.Error -> handleError(userLoadingResult.errorType.getErrorMessage())
+            is Resource.Loading -> setState { state.copy(isLoading = true) }
         }
     }
 
@@ -52,6 +54,7 @@ class LoadingViewModel @Inject constructor(
         )) {
             is Resource.Success -> handleUpdateUserSuccess()
             is Resource.Error -> handleError(userUpdateResult.errorType.getErrorMessage())
+            is Resource.Loading -> setState { state.copy(isLoading = true) }
         }
     }
 

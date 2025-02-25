@@ -18,15 +18,17 @@ import motiapps.melodify.core.presentation.navigation.NavGraph
 import motiapps.melodify.features.splash.SplashViewModel
 import motiapps.melodify.core.presentation.ui.theme.AppTheme
 import dagger.hilt.android.AndroidEntryPoint
-import motiapps.melodify.common.Logger
-import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
+import melodify.core.domain.Logger
+import melodify.core.domain.lifecycle.ActivityContextProvider
+import melodify.permission.data.PermissionManager
 import java.util.Locale
 import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-    @Inject lateinit var activityContextProvider: ActivityContextProvider
+    @Inject
+    lateinit var permissionManager: PermissionManager
 
     // This is better way then inject for viewModels in activity.
     private val splashViewModel: SplashViewModel by viewModels()
@@ -40,7 +42,7 @@ class MainActivity : ComponentActivity() {
         }
 
         super.onCreate(savedInstanceState)
-        lifecycle.addObserver(activityContextProvider)
+        ActivityContextProvider.register(this)
 
         setContent {
             AppTheme {

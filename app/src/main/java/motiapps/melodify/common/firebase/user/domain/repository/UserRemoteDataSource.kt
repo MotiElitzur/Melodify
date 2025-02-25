@@ -1,6 +1,6 @@
 package motiapps.melodify.common.firebase.user.domain.repository
 
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.common.user.data.model.UserDto
 
 interface UserRemoteDataSource {

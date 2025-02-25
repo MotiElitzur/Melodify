@@ -1,7 +1,7 @@
 package motiapps.melodify.features.register.domain.usecases
 
 import com.google.firebase.auth.FirebaseUser
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.features.register.data.model.RegisterMailInput
 import motiapps.melodify.features.register.domain.repository.RegisterRepository

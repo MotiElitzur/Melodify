@@ -4,7 +4,7 @@ import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import dagger.hilt.android.AndroidEntryPoint
-import motiapps.melodify.common.Logger
+import melodify.core.domain.Logger
 import motiapps.melodify.common.notifications.data.model.NotificationType
 import motiapps.melodify.common.notifications.data.model.action.NotificationAction
 

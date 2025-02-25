@@ -2,7 +2,7 @@ package motiapps.melodify.core.presentation.base
 
 import androidx.lifecycle.ViewModel
 import kotlinx.coroutines.flow.*
-import motiapps.melodify.common.Logger
+import melodify.core.domain.Logger
 
 abstract class BaseViewModel<State : IViewState, Event : IViewEvent?> : ViewModel() {
 

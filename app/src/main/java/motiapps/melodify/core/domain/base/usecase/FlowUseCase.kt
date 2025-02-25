@@ -2,7 +2,7 @@ package motiapps.melodify.core.domain.base.usecase
 
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 
 abstract class FlowUseCase<Input, Output> {
 

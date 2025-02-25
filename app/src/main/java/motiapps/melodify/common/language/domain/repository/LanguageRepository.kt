@@ -1,6 +1,6 @@
 package motiapps.melodify.common.language.domain.repository
 
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 
 interface LanguageRepository {
     suspend fun setAppLanguage(languageTag: String): Resource<Unit>

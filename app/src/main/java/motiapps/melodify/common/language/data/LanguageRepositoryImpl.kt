@@ -6,10 +6,10 @@ import androidx.core.os.LocaleListCompat
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import motiapps.melodify.common.datastore.data.model.PreferenceObject
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
+import melodify.datastore.domain.model.DataStoreItem
+import melodify.datastore.domain.usecase.PreferencesUseCases
 import motiapps.melodify.common.language.domain.repository.LanguageRepository
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import java.util.Locale
 import javax.inject.Inject
 
@@ -35,7 +35,7 @@ class LanguageRepositoryImpl @Inject constructor(
                 AppCompatDelegate.setApplicationLocales(localeList)
 
                 // Save the language to preferences
-                preferencesUseCases.setPreferenceUseCase(PreferenceObject("appLanguage", languageTag))
+                preferencesUseCases.setPreferenceUseCase(DataStoreItem("appLanguage", languageTag))
             }
             Resource.Success(Unit)
         } catch (e: Exception) {

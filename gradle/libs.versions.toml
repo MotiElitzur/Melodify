@@ -2,8 +2,8 @@
 kotlin = "2.1.10"
 serialization = "1.8.0"
 
-gradlePlugin = "8.8.1" # The gradle version itself handled in the gradle-wrapper.properties, currently 8.12
-ksp = "2.1.0-1.0.29"
+gradlePlugin = "8.8.1" # The gradle version itself handled in the gradle-wrapper.properties, currently 8.12.1
+ksp = "2.1.10-1.0.30"
 
 androidxCore = "1.15.0"
 splashScreen = "1.0.1"
@@ -16,7 +16,7 @@ composeNavigation = "2.8.7"
 firebaseBom = "33.9.0"
 googleServices = "4.4.2"
 
-datastorePreferences = "1.1.2"
+datastore = "1.1.2"
 room = "2.6.1"
 hilt = "2.55"
 hiltNavigation = "1.2.0"
@@ -29,12 +29,14 @@ coroutinesTest = "1.10.1"
 truth = "1.4.4"
 espressoCore = "3.6.1"
 material = "1.12.0"
+datastoreCoreAndroid = "1.1.2"
 
 [libraries]
 
 # Kotlin
-kotlin-reflection = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin"}
 kotlin-gradle-plugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
+kotlin-reflection = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin"}
+kotlin-serialization = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
 
 # Android Core
 androidx-core-ktx = { module = "androidx.core:core-ktx", version.ref = "androidxCore" }
@@ -49,17 +51,17 @@ hilt-android-testing = { module = "com.google.dagger:hilt-android-testing", vers
 hilt-compiler = { module = "com.google.dagger:hilt-compiler", version.ref = "hilt" }
 hilt-navigation-compose = { module = "androidx.hilt:hilt-navigation-compose", version.ref = "hiltNavigation" }
 
+# DataStore
+datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastore" }
+datastore-proto = { module = "androidx.datastore:datastore-core", version.ref = "datastore" }
+
 # Room
 room-runtime = { module = "androidx.room:room-runtime", version.ref = "room" }
 room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
 room-compiler = { module = "androidx.room:room-compiler", version.ref = "room" }
 
-# DataStore
-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
-
 # Navigation
 navigation-compose = { module = "androidx.navigation:navigation-compose", version.ref = "composeNavigation" }
-kotlinx-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization"}
 
 # Compose
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "composeBom" }
@@ -90,6 +92,7 @@ compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4
 compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }
 material = { group = "com.google.android.material", name = "material", version.ref = "material" }
+androidx-datastore-core-android = { group = "androidx.datastore", name = "datastore-core-android", version.ref = "datastoreCoreAndroid" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "gradlePlugin" }
@@ -101,3 +104,5 @@ kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref =
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 hilt-gradle = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServices" }
+android-library = { id = "com.android.library", version.ref = "gradlePlugin" }
+maven-publish = { id = "maven-publish" }

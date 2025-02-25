@@ -1,7 +1,7 @@
 package motiapps.melodify.features.login.domain.repository
 
 import com.google.firebase.auth.FirebaseUser
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 
 interface LoginRepository {
 

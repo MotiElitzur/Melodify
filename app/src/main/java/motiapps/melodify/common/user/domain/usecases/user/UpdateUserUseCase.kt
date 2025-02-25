@@ -1,6 +1,6 @@
 package motiapps.melodify.common.user.domain.usecases.user
 
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.common.user.domain.model.UserPartialUpdate
 import motiapps.melodify.common.user.domain.repository.UserRepository

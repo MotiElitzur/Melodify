@@ -1,6 +1,6 @@
 package motiapps.melodify.features.login.domain.usecase
 
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.core.domain.base.usecase.SuspendUseCase
 import motiapps.melodify.features.login.domain.repository.LoginRepository
 import javax.inject.Inject

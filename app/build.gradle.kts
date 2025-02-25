@@ -72,9 +72,13 @@ android {
 
 dependencies {
 
+    implementation(project(":melodify-datastore"))
+    implementation(project(":melodify-core"))
+    implementation(project(":melodify-permission"))
+
     // Kotlin
     implementation(libs.kotlin.reflection)
-    implementation(libs.kotlinx.serialization.json)
+    implementation(libs.kotlin.serialization)
 
     // Core Android dependencies
     implementation(libs.androidx.core.ktx)

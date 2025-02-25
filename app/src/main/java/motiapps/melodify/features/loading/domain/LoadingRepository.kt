@@ -1,7 +1,7 @@
 package motiapps.melodify.features.loading.domain
 
 import motiapps.melodify.common.user.data.model.User
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 
 interface LoadingRepository {
 

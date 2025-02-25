@@ -10,9 +10,9 @@ import com.google.firebase.auth.FirebaseUser
 import kotlinx.coroutines.tasks.await
 import motiapps.melodify.common.user.data.model.User
 import motiapps.melodify.common.user.domain.usecases.UserUseCases
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.features.login.domain.repository.LoginRepository
-import motiapps.melodify.core.presentation.base.error.BaseErrorType
+import melodify.core.domain.BaseErrorType
 import motiapps.melodify.core.presentation.base.error.LoginErrorType
 import javax.inject.Inject
 
@@ -39,6 +39,9 @@ class LoginRepositoryImpl @Inject constructor(
             }
             is Resource.Error -> {
                 return resource
+            }
+            is Resource.Loading -> {
+                return Resource.Loading
             }
         }
     }

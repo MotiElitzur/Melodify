@@ -2,12 +2,11 @@ package motiapps.melodify.features.login.presentation
 
 import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
-import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.Logger
+import melodify.core.domain.Logger
 import motiapps.melodify.common.Utils
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.features.login.domain.usecase.LoginUseCases
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.base.error.ErrorHandler.Companion.getErrorMessage
@@ -131,6 +130,7 @@ class LoginViewModel @Inject constructor(
         when (val resource = loginAction()) {
             is Resource.Success -> navigateToLoading()
             is Resource.Error -> setState { state.copy(isLoading = false, error = resource.errorType.getErrorMessage()) }
+            is Resource.Loading -> setState { state.copy(isLoading = true) }
         }
     }
 

@@ -3,7 +3,7 @@ package motiapps.melodify.common.firebase.user.data
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.tasks.await
 import motiapps.melodify.common.firebase.domain.FirestoreProvider
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.common.user.data.model.UserDto
 import motiapps.melodify.common.firebase.user.domain.repository.UserRemoteDataSource
 import javax.inject.Inject

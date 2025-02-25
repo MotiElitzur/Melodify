@@ -5,10 +5,9 @@ import motiapps.melodify.common.user.data.model.User
 import motiapps.melodify.common.user.data.model.toDto
 import motiapps.melodify.common.user.data.model.update
 import motiapps.melodify.common.firebase.user.domain.repository.UserRemoteDataSource
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
 import motiapps.melodify.common.user.data.model.toUser
 import motiapps.melodify.common.user.domain.repository.UserRepository
-import motiapps.melodify.core.presentation.base.error.BaseErrorType
 import javax.inject.Inject
 
 class UserRepositoryImpl @Inject constructor(
@@ -43,7 +42,7 @@ class UserRepositoryImpl @Inject constructor(
                     val localUser = userLocalDataSource.getUserById(userId)
                     if (localUser != null) {
                         cachedUser = localUser.toUser()
-                        Resource.Success(cachedUser!!, BaseErrorType.Network)
+                        Resource.Success(cachedUser!!)
                     } else {
                         Resource.Error(remoteUserResult.exception)
                     }
@@ -51,6 +50,7 @@ class UserRepositoryImpl @Inject constructor(
                     remoteUserResult
                 }
             }
+            is Resource.Loading -> Resource.Loading
         }
     }
 

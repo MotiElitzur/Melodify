@@ -1,7 +1,7 @@
 package motiapps.melodify.core.presentation.base.error
 
 import android.content.Context
-import motiapps.melodify.R
+import melodify.core.domain.BaseErrorType
 
 class ErrorHandler(private val context: Context) {
 
@@ -14,7 +14,6 @@ class ErrorHandler(private val context: Context) {
                 LoginErrorType.InvalidCredentials -> "The email or password is incorrect"
                 LoginErrorType.UserNotFound -> "User not found"
                 LoginErrorType.NoInternet -> "No internet connection"
-
                 RegisterErrorType.WeakPassword -> "Password must be at least 6 characters long"
                 RegisterErrorType.UserAlreadyExists -> "User already exists"
 

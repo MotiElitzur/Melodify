@@ -6,11 +6,10 @@ import jakarta.inject.Inject
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.datastore.data.model.PreferenceObject
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
-import motiapps.melodify.common.language.domain.usecase.LanguageUseCases
-import motiapps.melodify.core.data.lifecycle.ActivityContextProvider
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
+import melodify.datastore.domain.model.DataStoreItem
+import melodify.datastore.domain.usecase.PreferencesUseCases
+import melodify.core.domain.lifecycle.ActivityContextProvider
 import java.util.Locale
 
 @ActivityRetainedScoped
@@ -26,7 +25,7 @@ class LanguageManager @Inject constructor(
         CoroutineScope(Dispatchers.IO).launch {
 
             // Get the preferred language from use case
-            val result = preferencesUseCases.getPreferenceUseCase(PreferenceObject("appLanguage", "en"))
+            val result = preferencesUseCases.getPreferenceUseCase(DataStoreItem("appLanguage", "en"))
             val preferredLanguage = (result as? Resource.Success)?.data as? String ?: "en"
 
             // Change the application's language

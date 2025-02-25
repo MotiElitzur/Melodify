@@ -4,10 +4,10 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.viewModelScope
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.Logger
-import motiapps.melodify.common.datastore.data.model.PreferenceObject
-import motiapps.melodify.common.datastore.domain.usecase.PreferencesUseCases
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Resource
+import melodify.datastore.domain.model.DataStoreItem
+import melodify.datastore.domain.usecase.PreferencesUseCases
+import melodify.core.domain.Logger
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import javax.inject.Inject
 
@@ -33,7 +33,7 @@ class ThemeViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            preferencesUseCases.observePreferenceUseCase(PreferenceObject(DARK_MODE_KEY, false, isResultCanBeNull = true)).collect { darkModeStatus->
+            preferencesUseCases.observePreferenceUseCase(DataStoreItem(DARK_MODE_KEY, false, isResultCanBeNull = true)).collect { darkModeStatus->
                 setState {
                     state.copy(
                         isDarkTheme = (darkModeStatus as? Resource.Success)?.data as? Boolean
@@ -51,7 +51,7 @@ class ThemeViewModel @Inject constructor(
         }
 
         preferencesUseCases.setPreferenceUseCase(
-            PreferenceObject(
+            DataStoreItem(
                 key = DARK_MODE_KEY,
                 value = isDarkMode
             )

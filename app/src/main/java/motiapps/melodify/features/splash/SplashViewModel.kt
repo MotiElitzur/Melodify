@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import motiapps.melodify.common.firebase.user.domain.usecase.auth.UserLoggedInUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.Logger
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Logger
+import melodify.core.domain.Resource
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.navigation.NavDirections
 import motiapps.melodify.features.splash.presentation.SplashEvent
@@ -65,6 +65,9 @@ class SplashViewModel @Inject constructor(
             }
             is Resource.Error -> {
                 triggerEvent(SplashEvent.SetSplashState(NavDirections.Login))
+            }
+            is Resource.Loading -> {
+                // do nothing
             }
         }
     }

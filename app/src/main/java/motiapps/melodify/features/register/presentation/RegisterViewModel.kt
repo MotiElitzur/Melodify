@@ -5,8 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.google.firebase.auth.FirebaseUser
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
-import motiapps.melodify.common.Logger
-import motiapps.melodify.core.domain.base.Resource
+import melodify.core.domain.Logger
+import melodify.core.domain.Resource
 import motiapps.melodify.core.presentation.base.BaseSavedStateViewModel
 import motiapps.melodify.core.presentation.base.error.ErrorHandler.Companion.getErrorMessage
 import motiapps.melodify.core.presentation.navigation.NavDirections
@@ -153,6 +153,9 @@ class RegisterViewModel @Inject constructor(
                     generalError = result.errorType.getErrorMessage()
                 ) }
             }
+            is Resource.Loading -> {
+                setState { state.copy(isLoading = true) }
+            }
         }
     }
 
@@ -204,6 +207,7 @@ class RegisterViewModel @Inject constructor(
                 navigateTo = NavDirections.Loading.route
             ) }
             is Resource.Error -> handleRegistrationError(createUserResult)
+            is Resource.Loading -> setState { state.copy(isLoading = true) }
         }
     }
 
