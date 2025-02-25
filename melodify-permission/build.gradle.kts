@@ -47,14 +47,14 @@ dependencies {
 
 
 group = "com.github.MotiElitzur"
-version = "1.0.0"
+version = "1.0"
 
 publishing {
     publications {
         create<MavenPublication>("release") {
             groupId = "com.github.MotiElitzur"
             artifactId = "melodify-permission"
-            version = "1.0.0"
+            version = "1.0"
             afterEvaluate {
                 from(components["release"])
             }
