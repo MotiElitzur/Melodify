@@ -45,25 +45,42 @@ dependencies {
     ksp(libs.hilt.compiler)
 }
 
+
+group = "com.github.MotiElitzur"
+version = "1.0.0"
+
 publishing {
     publications {
-        register<MavenPublication>("release") {
-            groupId = "melodify"
-            artifactId = "permission"
-            version = "1.0"
+        create<MavenPublication>("release") {
+            groupId = "com.github.MotiElitzur"
+            artifactId = "melodify-permission"
+            version = "1.0.0"
             afterEvaluate {
                 from(components["release"])
             }
         }
     }
-    repositories {
-        maven {
-            name = "GitHubPackages"
-            url = uri("https://maven.pkg.github.com/MotiElitzur/Melodify")
-            credentials {
-                username = (project.findProperty("gpr.user") as? String) ?: System.getenv("GITHUB_USERNAME")
-                password = (project.findProperty("gpr.token") as? String) ?: System.getenv("GITHUB_TOKEN")
-            }
-        }
-    }
 }
+//
+//publishing {
+//    publications {
+//        register<MavenPublication>("release") {
+//            groupId = "melodify"
+//            artifactId = "permission"
+//            version = "1.0"
+//            afterEvaluate {
+//                from(components["release"])
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            name = "GitHubPackages"
+//            url = uri("https://maven.pkg.github.com/MotiElitzur/Melodify")
+//            credentials {
+//                username = (project.findProperty("gpr.user") as? String) ?: System.getenv("GITHUB_USERNAME")
+//                password = (project.findProperty("gpr.token") as? String) ?: System.getenv("GITHUB_TOKEN")
+//            }
+//        }
+//    }
+//}
