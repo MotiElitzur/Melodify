@@ -3,4 +3,4 @@ jdk:
 
 build:
   gradle:
-    - "melodify-permission:assembleRelease"
+    - "cd melodify-permission && ../gradlew assembleRelease"
