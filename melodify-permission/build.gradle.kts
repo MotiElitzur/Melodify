@@ -27,11 +27,11 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = "11"
+        jvmTarget = "17"
     }
 }
 
@@ -47,14 +47,14 @@ dependencies {
 
 
 group = "com.github.MotiElitzur"
-version = "1.1"
+version = "1.3"
 
 publishing {
     publications {
         create<MavenPublication>("release") {
             groupId = "com.github.MotiElitzur"
             artifactId = "melodify-permission"
-            version = "1.1"
+            version = "1.3"
             afterEvaluate {
                 from(components["release"])
             }
