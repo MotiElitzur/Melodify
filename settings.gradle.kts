@@ -17,7 +17,7 @@ dependencyResolutionManagement {
 
 
 rootProject.name = "Melodify"
-//include(":app")
+include(":app")
 include(":melodify-datastore")
 include(":melodify-core")
 include(":melodify-permission")

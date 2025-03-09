@@ -4,6 +4,9 @@ plugins {
     alias(libs.plugins.ksp)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.maven.publish)
+
+    alias(libs.plugins.maven.publish.plugin)
+    alias(libs.plugins.nmcp)
 }
 
 android {
